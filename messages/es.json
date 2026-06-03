@@ -1,0 +1,278 @@
+{
+  "nav": {
+    "fleet": "Flota",
+    "howItWorks": "Cómo funciona",
+    "destinations": "Destinos",
+    "faq": "FAQ",
+    "book": "Reservar",
+    "langSwitch": "EN"
+  },
+  "hero": {
+    "tagline": "Explora Costa Rica a tu propio ritmo",
+    "headline1": "Explora",
+    "headline2": "Costa Rica",
+    "headline3": "a tu ritmo",
+    "subtext": "Sloth Rent a Car nació para ofrecer un servicio más personal, transparente y cercano. Relájate, toma las llaves y descubre Costa Rica a tu manera.",
+    "cta": "Ver nuestra flota",
+    "ctaBook": "Hacer una reserva"
+  },
+  "trust": {
+    "title": "¿Por qué elegirnos?",
+    "items": [
+      { "title": "Seguro incluido", "desc": "CDW, accidentes, terceros y robo en cada reserva" },
+      { "title": "Reserva en minutos", "desc": "Cotización por WhatsApp, sin formularios complicados" },
+      { "title": "Asistencia 24 horas", "desc": "Te acompañamos en toda tu aventura costarricense" },
+      { "title": "Entrega en aeropuerto", "desc": "Servicio en Juan Santamaría (SJO) y Turrialba" }
+    ]
+  },
+  "fleet": {
+    "title": "Nuestra Flota",
+    "subtitle": "6 vehículos seleccionados para cada tipo de aventura en Costa Rica",
+    "filterAll": "Todos",
+    "filterEconomy": "Económicos",
+    "filterSuv": "SUV",
+    "filterPassengers": "7 pasajeros",
+    "filter4x4": "4×4",
+    "perDay": "/ día",
+    "approx": "aprox.",
+    "deposit": "Depósito",
+    "passengers": "pasajeros",
+    "luggage": "maletas",
+    "carryOn": "de mano",
+    "automatic": "Automático",
+    "manual": "Manual",
+    "book": "Reservar",
+    "viewDetail": "Ver detalles",
+    "checkAvailability": "Consultar disponibilidad",
+    "available": "Disponible",
+    "availabilityLimited": "Consultar disponibilidad",
+    "rateRef": "Precios estimados en USD. Tipo de cambio de referencia."
+  },
+  "howItWorks": {
+    "title": "Cómo funciona",
+    "subtitle": "Reservar tu vehículo es sencillo y rápido",
+    "label": "Simple & rápido",
+    "ctaButton": "Hacer una reserva",
+    "steps": [
+      {
+        "number": "01",
+        "title": "Contáctanos por WhatsApp",
+        "desc": "Escríbenos con tus fechas y destino. Te respondemos en minutos con disponibilidad y precios."
+      },
+      {
+        "number": "02",
+        "title": "Selecciona tu vehículo",
+        "desc": "Elige el auto que mejor se adapte a tu viaje y grupo. Filtra por pasajeros, tracción y presupuesto."
+      },
+      {
+        "number": "03",
+        "title": "Reserva con 50% de anticipo",
+        "desc": "Confirma con la mitad del valor total. Aceptamos transferencia, SINPE, efectivo y tarjeta."
+      },
+      {
+        "number": "04",
+        "title": "Recibe tu vehículo",
+        "desc": "Te entregamos en nuestra sucursal en Turrialba o en el Aeropuerto Juan Santamaría (SJO)."
+      }
+    ]
+  },
+  "destinations": {
+    "title": "Destinos populares",
+    "subtitle": "Desde Turrialba, Costa Rica entera está al alcance de tu mano",
+    "items": [
+      {
+        "name": "Arenal y La Fortuna",
+        "desc": "Volcanes, aguas termales y selva tropical. Recomendamos el Vitara 4×4 para las rutas de montaña.",
+        "tag": "Recomendado: Vitara 4×4"
+      },
+      {
+        "name": "Manuel Antonio",
+        "desc": "Playas paradisíacas y el parque nacional más visitado. El Venue es perfecto para este destino.",
+        "tag": "Recomendado: Hyundai Venue"
+      },
+      {
+        "name": "Monteverde",
+        "desc": "Puentes colgantes y bosque nuboso. Para grupos de hasta 7, el Rush es nuestra elección ideal.",
+        "tag": "Recomendado: Toyota Rush"
+      },
+      {
+        "name": "Guanacaste - Tamarindo",
+        "desc": "Playas del Pacífico Norte, surf y puestas de sol espectaculares. El destino ideal para quienes buscan playa y aventura.",
+        "tag": "Recomendado: Suzuki Vitara"
+      },
+      {
+        "name": "Tortuguero",
+        "desc": "Canales de agua dulce, selva tropical y observación de tortugas. Un destino único para los amantes de la naturaleza.",
+        "tag": "Recomendado: Toyota Rush 7 pax"
+      },
+      {
+        "name": "Valle Central - San José",
+        "desc": "La capital y sus alrededores: museos, mercados, gastronomía costarricense y punto de partida para explorar el país.",
+        "tag": "Recomendado: Suzuki Swift"
+      }
+    ],
+    "cta": "Reservar ahora"
+  },
+  "testimonials": {
+    "title": "Lo que dicen nuestros clientes",
+    "subtitle": "Reseñas reales de Google de quienes exploraron Costa Rica con nosotros",
+    "googleReviews": "Google Reviews",
+    "viewOnGoogle": "Ver en Google Maps",
+    "googleMapsUrl": "https://maps.app.goo.gl/82EummmkBDbrvn8r5",
+    "placeholder": [
+      {
+        "name": "Fernando Martinez",
+        "origin": "Google Reviews",
+        "text": "Excelente experiencia alquilando un coche con ellos este fin de semana. La atención de Diego impecable (nos ayudó en todo lo que necesitamos) y el coche en muy buenas condiciones!",
+        "rating": 5
+      },
+      {
+        "name": "A López",
+        "origin": "Google Reviews",
+        "text": "Queremos agradecer y recomendar ampliamente a Sloth Rent a Car. Manuel y Diego nos atendieron con muchísima cortesía y siempre estuvieron dispuestos a ayudarnos. Los vehículos estaban en perfectas condiciones, muy limpios. Los precios fueron muy buenos y transparentes. Definitivamente volveríamos a rentar con ellos.",
+        "rating": 5
+      },
+      {
+        "name": "Xadani Uribe Jiménez",
+        "origin": "Google Reviews",
+        "text": "Gran experiencia para conocer todo Costa Rica, siempre en buena comunicación y el vehículo (Toyota Agya) estaba en excelentes condiciones, 100% volveré a alquilar con Sloth.",
+        "rating": 5
+      }
+    ]
+  },
+  "faq": {
+    "title": "Preguntas frecuentes",
+    "subtitle": "Todo lo que necesitas saber antes de reservar",
+    "items": [
+      {
+        "q": "¿Qué incluye el alquiler?",
+        "a": "Todos nuestros vehículos incluyen: Seguro CDW (Daños a la Unidad), seguro de accidentes personales, seguro a terceros, seguro contra robo y asistencia en carretera 24/7. No incluye cobertura 0 deducible — disponible por $15/día adicionales."
+      },
+      {
+        "q": "¿Cuál es el deducible en caso de accidente?",
+        "a": "El deducible estándar es de $800 USD en caso de incidente. Para eliminar este deducible, ofrecemos la cobertura 0 deducible por solo $15 USD al día, disponible al momento de la reserva."
+      },
+      {
+        "q": "¿Cómo funciona el depósito de garantía?",
+        "a": "El depósito de garantía es de $400 USD para vehículos económicos (Agya, Swift) y $500 USD para SUV. Se paga por tarjeta de crédito o transferencia. Se reembolsa en 5–15 días hábiles tras la inspección sin incidentes."
+      },
+      {
+        "q": "¿Cuál es la política de cancelación?",
+        "a": "Con más de 2 semanas de anticipación: reembolso del 100%. Con menos de 2 semanas: reembolso del 75%. Con menos de 1 semana: sin reembolso. Se requiere el 50% del total para confirmar la reserva."
+      },
+      {
+        "q": "¿Cuáles son las formas de pago aceptadas?",
+        "a": "Aceptamos transferencia bancaria, SINPE Móvil, efectivo en colones o dólares, y tarjeta de crédito. El depósito de garantía debe pagarse con tarjeta de crédito o transferencia bancaria."
+      },
+      {
+        "q": "¿Ofrecen entrega en el Aeropuerto Juan Santamaría?",
+        "a": "Sí. Hacemos entrega y recepción de vehículos en el Aeropuerto Internacional Juan Santamaría (SJO) y en nuestra sucursal en Turrialba (Plaza Nuri, frente a la entrada principal del IET). Consulta disponibilidad y tarifas de entrega por WhatsApp."
+      },
+      {
+        "q": "¿Hay sillas para niños disponibles?",
+        "a": "Sí. Ofrecemos sillas para niños por $10 USD al día. Puedes agregarla al momento de realizar la reserva."
+      },
+      {
+        "q": "¿Cuál es el requisito de edad y documentación?",
+        "a": "Se requiere tener mínimo 23 años (algunos modelos 21+), licencia de conducir vigente válida en Costa Rica, pasaporte o cédula, y tarjeta de crédito para el depósito de garantía."
+      }
+    ]
+  },
+  "footer": {
+    "tagline": "Explora Costa Rica a tu propio ritmo",
+    "address": "Plaza Nuri, frente a entrada principal del IET",
+    "city": "Turrialba, Cartago, Costa Rica",
+    "whatsapp": "+506 7281-6080",
+    "delivery": "Entrega en: Turrialba · Aeropuerto SJO",
+    "links": {
+      "fleet": "Flota",
+      "howItWorks": "Cómo funciona",
+      "faq": "FAQ",
+      "contact": "Contacto"
+    },
+    "social": "Síguenos",
+    "instagram": "Instagram",
+    "facebook": "Facebook",
+    "rights": "Todos los derechos reservados."
+  },
+  "modal": {
+    "title": "Reservar vehículo",
+    "step1": "Detalles de reserva",
+    "step2": "Tus datos",
+    "stepOf": "Paso {current} de {total}",
+    "name": "Nombre completo",
+    "namePlaceholder": "Ej. Ana García",
+    "phone": "WhatsApp",
+    "phonePlaceholder": "7281-6080",
+    "email": "Email (opcional)",
+    "emailPlaceholder": "tu@email.com",
+    "vehicle": "Vehículo",
+    "selectVehicle": "Selecciona un vehículo",
+    "pickupDate": "Fecha de entrega",
+    "returnDate": "Fecha de devolución",
+    "pickupLocation": "Lugar de entrega",
+    "locationTurrialba": "Sucursal Turrialba",
+    "locationAirport": "Aeropuerto Juan Santamaría (SJO)",
+    "locationOther": "Otro (indicar en notas)",
+    "extras": "Extras opcionales",
+    "extraZeroDeductible": "Cobertura 0 deducible (+$15/día)",
+    "extraChildSeat": "Silla para niños (+$10/día)",
+    "notes": "Notas adicionales (opcional)",
+    "notesPlaceholder": "Vuelo, hora de llegada, peticiones especiales...",
+    "next": "Continuar",
+    "back": "Volver",
+    "send": "Enviar por WhatsApp",
+    "close": "Cerrar",
+    "summary": "Resumen de precio estimado",
+    "days": "{n} días",
+    "totalEstimated": "Total estimado",
+    "depositRequired": "Anticipo requerido (50%)",
+    "disclaimer": "Precio estimado. El monto final se confirma por WhatsApp e incluye el depósito de garantía reembolsable (${deposit} USD).",
+    "required": "Campo requerido",
+    "minDays": "La devolución debe ser al menos 1 día después de la entrega"
+  },
+  "vehicle": {
+    "back": "← Volver a la flota",
+    "year": "Año",
+    "type": "Tipo",
+    "drive": "Tracción",
+    "transmission": "Transmisión",
+    "passengers": "Pasajeros",
+    "luggage": "Equipaje",
+    "largeBags": "maleta grande",
+    "largeBagsPlural": "maletas grandes",
+    "carryOns": "bolso de mano",
+    "carryOnsPlural": "bolsos de mano",
+    "pricePerDay": "Precio por día",
+    "deposit": "Depósito de garantía",
+    "category": "Categoría",
+    "economy": "Económico",
+    "suv": "SUV",
+    "automatic": "Automático",
+    "included": "¿Qué incluye?",
+    "includedItems": [
+      "Seguro CDW (Collision Damage Waiver)",
+      "Seguro de accidentes personales",
+      "Seguro a terceros",
+      "Seguro contra robo",
+      "Asistencia en carretera 24/7"
+    ],
+    "notIncluded": "No incluye",
+    "deductible": "Cobertura 0 deducible estándar (en caso de incidente: $800 deducible)",
+    "extrasAvailable": "Extras disponibles",
+    "zeroDeductible": "Cobertura 0 deducible",
+    "zeroDeductiblePrice": "$15/día",
+    "childSeat": "Silla para niños",
+    "childSeatPrice": "$10/día",
+    "idealFor": "Ideal para...",
+    "bookNow": "Reservar este vehículo",
+    "relatedTitle": "Otros vehículos que te pueden interesar",
+    "checkAvailability": "Consultar disponibilidad",
+    "availabilityLimited": "Disponibilidad limitada — consulta por WhatsApp"
+  },
+  "notFound": {
+    "title": "¡Ups! Esta página no existe",
+    "subtitle": "Parece que el perezoso se perdió en la selva.",
+    "cta": "Volver al inicio"
+  }
+}

@@ -1,0 +1,278 @@
+{
+  "nav": {
+    "fleet": "Fleet",
+    "howItWorks": "How it works",
+    "destinations": "Destinations",
+    "faq": "FAQ",
+    "book": "Book now",
+    "langSwitch": "ES"
+  },
+  "hero": {
+    "tagline": "Explore Costa Rica at your own pace",
+    "headline1": "Explore",
+    "headline2": "Costa Rica",
+    "headline3": "your way",
+    "subtext": "We believe travel isn't about rushing — it's about discovering incredible landscapes and creating unforgettable experiences. Sloth Rent a Car was born to offer a more personal, transparent and close service.",
+    "cta": "See our fleet",
+    "ctaBook": "Make a reservation"
+  },
+  "trust": {
+    "title": "Why choose us?",
+    "items": [
+      { "title": "Insurance included", "desc": "CDW, personal accident, third-party & theft in every booking" },
+      { "title": "Book in minutes", "desc": "Quote by WhatsApp, no complicated forms" },
+      { "title": "24-hour assistance", "desc": "We support you throughout your Costa Rican adventure" },
+      { "title": "Airport delivery", "desc": "Service at Juan Santamaría (SJO) and Turrialba" }
+    ]
+  },
+  "fleet": {
+    "title": "Our Fleet",
+    "subtitle": "6 vehicles selected for every type of adventure in Costa Rica",
+    "filterAll": "All",
+    "filterEconomy": "Economy",
+    "filterSuv": "SUV",
+    "filterPassengers": "7 passengers",
+    "filter4x4": "4×4",
+    "perDay": "/ day",
+    "approx": "approx.",
+    "deposit": "Deposit",
+    "passengers": "passengers",
+    "luggage": "suitcases",
+    "carryOn": "carry-on",
+    "automatic": "Automatic",
+    "manual": "Manual",
+    "book": "Book",
+    "viewDetail": "View details",
+    "checkAvailability": "Check availability",
+    "available": "Available",
+    "availabilityLimited": "Check availability",
+    "rateRef": "Estimated prices in USD. Reference exchange rate."
+  },
+  "howItWorks": {
+    "title": "How it works",
+    "subtitle": "Booking your vehicle is simple and fast",
+    "label": "Simple & fast",
+    "ctaButton": "Make a reservation",
+    "steps": [
+      {
+        "number": "01",
+        "title": "Contact us on WhatsApp",
+        "desc": "Message us your dates and destination. We reply in minutes with availability and pricing."
+      },
+      {
+        "number": "02",
+        "title": "Choose your vehicle",
+        "desc": "Select the car that best fits your trip and group. Filter by passengers, drive type, and budget."
+      },
+      {
+        "number": "03",
+        "title": "Reserve with 50% deposit",
+        "desc": "Confirm with half the total. We accept bank transfer, SINPE, cash, and credit card."
+      },
+      {
+        "number": "04",
+        "title": "Receive your vehicle",
+        "desc": "We deliver at our Turrialba branch or Juan Santamaría International Airport (SJO)."
+      }
+    ]
+  },
+  "destinations": {
+    "title": "Popular destinations",
+    "subtitle": "From Turrialba, all of Costa Rica is within reach",
+    "items": [
+      {
+        "name": "Arenal & La Fortuna",
+        "desc": "Volcanoes, hot springs, and tropical jungle. We recommend the Vitara 4×4 for mountain routes.",
+        "tag": "Recommended: Vitara 4×4"
+      },
+      {
+        "name": "Manuel Antonio",
+        "desc": "Paradise beaches and Costa Rica's most-visited national park. The Venue is perfect for this destination.",
+        "tag": "Recommended: Hyundai Venue"
+      },
+      {
+        "name": "Monteverde",
+        "desc": "Hanging bridges and cloud forest. For groups of up to 7, the Rush is our ideal choice.",
+        "tag": "Recommended: Toyota Rush"
+      },
+      {
+        "name": "Guanacaste - Tamarindo",
+        "desc": "North Pacific beaches, surfing, and spectacular sunsets. The perfect destination for beach lovers and adventurers.",
+        "tag": "Recommended: Suzuki Vitara"
+      },
+      {
+        "name": "Tortuguero",
+        "desc": "Freshwater canals, tropical jungle, and sea turtle nesting. A unique destination for nature lovers.",
+        "tag": "Recommended: Toyota Rush 7 pax"
+      },
+      {
+        "name": "Central Valley - San José",
+        "desc": "The capital and surroundings: museums, markets, Costa Rican cuisine, and the perfect base to explore the country.",
+        "tag": "Recommended: Suzuki Swift"
+      }
+    ],
+    "cta": "Book now"
+  },
+  "testimonials": {
+    "title": "What our clients say",
+    "subtitle": "Real Google reviews from those who explored Costa Rica with us",
+    "googleReviews": "Google Reviews",
+    "viewOnGoogle": "View on Google Maps",
+    "googleMapsUrl": "https://maps.app.goo.gl/82EummmkBDbrvn8r5",
+    "placeholder": [
+      {
+        "name": "Fernando Martinez",
+        "origin": "Google Reviews",
+        "text": "Excelente experiencia alquilando un coche con ellos este fin de semana. La atención de Diego impecable (nos ayudó en todo lo que necesitamos) y el coche en muy buenas condiciones!",
+        "rating": 5
+      },
+      {
+        "name": "A López",
+        "origin": "Google Reviews",
+        "text": "Queremos agradecer y recomendar ampliamente a Sloth Rent a Car. Manuel y Diego nos atendieron con muchísima cortesía. Los vehículos estaban en perfectas condiciones, muy limpios. Los precios fueron muy buenos y transparentes. Definitivamente volveríamos a rentar con ellos.",
+        "rating": 5
+      },
+      {
+        "name": "Xadani Uribe Jiménez",
+        "origin": "Google Reviews",
+        "text": "Gran experiencia para conocer todo Costa Rica, siempre en buena comunicación y el vehículo (Toyota Agya) estaba en excelentes condiciones, 100% volveré a alquilar con Sloth.",
+        "rating": 5
+      }
+    ]
+  },
+  "faq": {
+    "title": "Frequently asked questions",
+    "subtitle": "Everything you need to know before booking",
+    "items": [
+      {
+        "q": "What's included in the rental?",
+        "a": "All our vehicles include: CDW insurance (Collision Damage Waiver), personal accident insurance, third-party liability, theft protection, and 24/7 roadside assistance. Zero-deductible coverage is not included — available for an additional $15/day."
+      },
+      {
+        "q": "What is the deductible in case of an accident?",
+        "a": "The standard deductible is $800 USD in the event of an incident. To eliminate this deductible, we offer zero-deductible coverage for just $15 USD per day, available at the time of booking."
+      },
+      {
+        "q": "How does the security deposit work?",
+        "a": "The security deposit is $400 USD for economy vehicles (Agya, Swift) and $500 USD for SUVs. Paid by credit card or bank transfer. Refunded within 5–15 business days after inspection with no incidents."
+      },
+      {
+        "q": "What is the cancellation policy?",
+        "a": "More than 2 weeks in advance: 100% refund. Less than 2 weeks: 75% refund. Less than 1 week: no refund. A 50% deposit is required to confirm the booking."
+      },
+      {
+        "q": "What payment methods are accepted?",
+        "a": "We accept bank transfer, SINPE Móvil, cash in colones or dollars, and credit card. The security deposit must be paid by credit card or bank transfer."
+      },
+      {
+        "q": "Do you offer airport delivery?",
+        "a": "Yes. We deliver and receive vehicles at Juan Santamaría International Airport (SJO) and at our Turrialba branch (Plaza Nuri, opposite the main IET entrance). Check availability and delivery rates via WhatsApp."
+      },
+      {
+        "q": "Are child seats available?",
+        "a": "Yes. We offer child seats for $10 USD per day. You can add one at the time of booking."
+      },
+      {
+        "q": "What are the age and documentation requirements?",
+        "a": "You must be at least 23 years old (21+ for some models), hold a valid driver's license recognized in Costa Rica, have a passport or national ID, and a credit card for the security deposit."
+      }
+    ]
+  },
+  "footer": {
+    "tagline": "Explore Costa Rica at your own pace",
+    "address": "Plaza Nuri, opposite the main IET entrance",
+    "city": "Turrialba, Cartago, Costa Rica",
+    "whatsapp": "+506 7281-6080",
+    "delivery": "Delivery at: Turrialba · SJO Airport",
+    "links": {
+      "fleet": "Fleet",
+      "howItWorks": "How it works",
+      "faq": "FAQ",
+      "contact": "Contact"
+    },
+    "social": "Follow us",
+    "instagram": "Instagram",
+    "facebook": "Facebook",
+    "rights": "All rights reserved."
+  },
+  "modal": {
+    "title": "Book a vehicle",
+    "step1": "Booking details",
+    "step2": "Your details",
+    "stepOf": "Step {current} of {total}",
+    "name": "Full name",
+    "namePlaceholder": "e.g. Ana García",
+    "phone": "WhatsApp",
+    "phonePlaceholder": "7281-6080",
+    "email": "Email (optional)",
+    "emailPlaceholder": "you@email.com",
+    "vehicle": "Vehicle",
+    "selectVehicle": "Select a vehicle",
+    "pickupDate": "Pickup date",
+    "returnDate": "Return date",
+    "pickupLocation": "Pickup location",
+    "locationTurrialba": "Turrialba branch",
+    "locationAirport": "Juan Santamaría Airport (SJO)",
+    "locationOther": "Other (specify in notes)",
+    "extras": "Optional extras",
+    "extraZeroDeductible": "Zero-deductible coverage (+$15/day)",
+    "extraChildSeat": "Child seat (+$10/day)",
+    "notes": "Additional notes (optional)",
+    "notesPlaceholder": "Flight number, arrival time, special requests...",
+    "next": "Continue",
+    "back": "Back",
+    "send": "Send via WhatsApp",
+    "close": "Close",
+    "summary": "Estimated price summary",
+    "days": "{n} days",
+    "totalEstimated": "Estimated total",
+    "depositRequired": "Required deposit (50%)",
+    "disclaimer": "Estimated price. Final amount confirmed via WhatsApp and includes the refundable security deposit (${deposit} USD).",
+    "required": "Required field",
+    "minDays": "Return must be at least 1 day after pickup"
+  },
+  "vehicle": {
+    "back": "← Back to fleet",
+    "year": "Year",
+    "type": "Type",
+    "drive": "Drive",
+    "transmission": "Transmission",
+    "passengers": "Passengers",
+    "luggage": "Luggage",
+    "largeBags": "large suitcase",
+    "largeBagsPlural": "large suitcases",
+    "carryOns": "carry-on bag",
+    "carryOnsPlural": "carry-on bags",
+    "pricePerDay": "Price per day",
+    "deposit": "Security deposit",
+    "category": "Category",
+    "economy": "Economy",
+    "suv": "SUV",
+    "automatic": "Automatic",
+    "included": "What's included?",
+    "includedItems": [
+      "CDW Insurance (Collision Damage Waiver)",
+      "Personal accident insurance",
+      "Third-party liability",
+      "Theft protection",
+      "24/7 roadside assistance"
+    ],
+    "notIncluded": "Not included",
+    "deductible": "Zero-deductible coverage (standard deductible in case of incident: $800)",
+    "extrasAvailable": "Available extras",
+    "zeroDeductible": "Zero-deductible coverage",
+    "zeroDeductiblePrice": "$15/day",
+    "childSeat": "Child seat",
+    "childSeatPrice": "$10/day",
+    "idealFor": "Ideal for...",
+    "bookNow": "Book this vehicle",
+    "relatedTitle": "Other vehicles you might like",
+    "checkAvailability": "Check availability",
+    "availabilityLimited": "Limited availability — check via WhatsApp"
+  },
+  "notFound": {
+    "title": "Oops! This page doesn't exist",
+    "subtitle": "Looks like the sloth got lost in the jungle.",
+    "cta": "Back to home"
+  }
+}
