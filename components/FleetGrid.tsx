@@ -134,7 +134,7 @@ export default function FleetGrid() {
         ) : (
           <div
             className="flex items-start gap-5 overflow-x-auto overflow-y-hidden pb-4 -mx-4 px-4 sm:-mx-6 sm:px-6 scroll-hide"
-            style={{ touchAction: 'pan-x' }}
+            style={{ touchAction: 'pan-x pan-y' }}
           >
             {filtered.map((vehicle, i) => (
               <div key={vehicle.slug} className="flex-none w-72 sm:w-80">
