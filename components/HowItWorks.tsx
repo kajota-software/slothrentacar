@@ -1,7 +1,8 @@
 'use client';
 
-import { useState } from 'react';
-import { motion } from 'framer-motion';
+import { useRef, useState } from 'react';
+import Image from 'next/image';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import { useTranslations } from 'next-intl';
 import ReservationModal from './ReservationModal';
 
@@ -9,10 +10,43 @@ export default function HowItWorks() {
   const t = useTranslations('howItWorks');
   const steps = t.raw('steps') as Array<{ number: string; title: string; desc: string }>;
   const [modalOpen, setModalOpen] = useState(false);
+  const sectionRef = useRef<HTMLElement>(null);
+
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ['start end', 'end start'],
+  });
+  const y = useTransform(scrollYProgress, [0, 1], ['-15%', '15%']);
 
   return (
     <>
-      <section id="how-it-works" className="bg-forest grain-overlay py-24 md:py-32">
+      <section
+        ref={sectionRef}
+        id="how-it-works"
+        className="relative overflow-hidden bg-forest grain-overlay py-24 md:py-32"
+      >
+        {/* Parallax background image */}
+        <motion.div
+          style={{ y }}
+          className="absolute inset-0 scale-[1.35]"
+          aria-hidden="true"
+        >
+          <Image
+            src="https://images.unsplash.com/photo-1724521154181-93e3207aa22c?auto=format&fit=crop&w=1920&q=80"
+            alt=""
+            fill
+            sizes="100vw"
+            style={{ objectFit: 'cover', objectPosition: 'center' }}
+          />
+        </motion.div>
+
+        {/* Forest green overlay — preserves palette, lets sloth show through */}
+        <div
+          className="absolute inset-0"
+          style={{ background: 'rgba(15,42,31,0.78)' }}
+          aria-hidden="true"
+        />
+
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Header */}
           <div className="text-center mb-16">
@@ -68,7 +102,7 @@ export default function HowItWorks() {
             ))}
           </div>
 
-          {/* CTA — opens modal */}
+          {/* CTA */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}

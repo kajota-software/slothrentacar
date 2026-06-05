@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { useTranslations } from 'next-intl';
 import { fleet } from '@/lib/fleet';
@@ -48,12 +49,23 @@ export default function Hero() {
         id="hero"
         className="grain-overlay relative min-h-screen flex items-center justify-center overflow-hidden bg-forest"
       >
+        {/* Background image */}
+        <Image
+          src="https://images.unsplash.com/photo-1627609243025-22613935dfa1?auto=format&fit=crop&w=1920&q=80"
+          alt=""
+          fill
+          priority
+          sizes="100vw"
+          style={{ objectFit: 'cover', objectPosition: 'center' }}
+          aria-hidden="true"
+        />
+
         {/* Gradient overlays */}
         <div
           className="absolute inset-0"
           style={{
             background:
-              'radial-gradient(ellipse at 70% 30%, rgba(45,106,79,0.4) 0%, transparent 60%), linear-gradient(to bottom, rgba(15,42,31,0.3) 0%, rgba(15,42,31,0.7) 100%)',
+              'radial-gradient(ellipse at 70% 30%, rgba(45,106,79,0.5) 0%, transparent 60%), linear-gradient(to bottom, rgba(15,42,31,0.45) 0%, rgba(15,42,31,0.82) 100%)',
           }}
           aria-hidden="true"
         />
