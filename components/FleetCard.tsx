@@ -5,91 +5,95 @@ import { motion } from 'framer-motion';
 import { useTranslations } from 'next-intl';
 import { Link } from '@/i18n/navigation';
 import type { Vehicle } from '@/lib/fleet';
-import { formatUSD, crcToUsd, isSantaFeAvailable } from '@/lib/utils';
+import { formatUSD, formatCRC, crcToUsd, isSantaFeAvailable } from '@/lib/utils';
 import VehicleImage from './VehicleImage';
 import ReservationModal from './ReservationModal';
 
 interface FleetCardProps {
   vehicle: Vehicle;
   index?: number;
+  currency?: 'CRC' | 'USD';
+  rate?: number | null;
 }
 
-export default function FleetCard({ vehicle, index = 0 }: FleetCardProps) {
+export default function FleetCard({ vehicle, index = 0, currency = 'CRC', rate }: FleetCardProps) {
   const t = useTranslations('fleet');
   const [modalOpen, setModalOpen] = useState(false);
 
   const isLimited = vehicle.note === 'availability-limited' && !isSantaFeAvailable();
-  const usdPrice = crcToUsd(vehicle.pricePerDayCRC);
+
+  const priceDisplay =
+    currency === 'USD' && rate
+      ? formatUSD(crcToUsd(vehicle.pricePerDayCRC, rate))
+      : formatCRC(vehicle.pricePerDayCRC);
 
   return (
     <>
+      {/* opacity-only animation — no Y movement to avoid scroll glitch in carousel */}
       <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
-        transition={{ duration: 0.5, delay: index * 0.08 }}
-        className="group bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-sand flex flex-col"
+        transition={{ duration: 0.45, delay: index * 0.07 }}
+        className="group flex flex-col rounded-2xl overflow-hidden bg-white shadow-[0_2px_16px_rgba(27,67,50,0.07)] hover:shadow-[0_10px_36px_rgba(27,67,50,0.13)] transition-shadow duration-300"
       >
         {/* Image */}
-        <div className="relative h-48 overflow-hidden bg-sand">
+        <div className="relative h-52 overflow-hidden bg-sand flex-none">
           <VehicleImage slug={vehicle.slug} name={vehicle.name} />
-          <div className="absolute top-3 left-3 z-20">
-            <span className={`text-xs font-semibold px-3 py-1 rounded-full ${
-              vehicle.category === 'economy' ? 'bg-white/90 text-forest' : 'bg-forest/90 text-white'
-            }`}>
+          {/* Gradient pour depth */}
+          <div className="absolute inset-0 bg-gradient-to-t from-forest-dark/40 via-transparent to-transparent pointer-events-none" />
+
+          {/* Badges */}
+          <div className="absolute top-3 left-3 flex items-center gap-1.5 z-10">
+            <span
+              className={`text-[11px] font-semibold px-2.5 py-1 rounded-full backdrop-blur-sm ${
+                vehicle.category === 'economy'
+                  ? 'bg-white/90 text-forest'
+                  : 'bg-forest/90 text-white'
+              }`}
+            >
               {vehicle.category === 'economy' ? t('filterEconomy') : 'SUV'}
             </span>
+            {vehicle.drive === '4x4' && (
+              <span className="text-[11px] font-semibold px-2.5 py-1 rounded-full bg-amber text-forest-dark">
+                4×4
+              </span>
+            )}
           </div>
-          {vehicle.drive === '4x4' && (
-            <div className="absolute top-3 right-3 z-20">
-              <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-amber text-forest-dark">4×4</span>
-            </div>
-          )}
+
+          {/* Year — bottom right of image */}
+          <span className="absolute bottom-3 right-3 z-10 text-[11px] font-medium text-white/80 bg-forest-dark/50 backdrop-blur-sm px-2 py-0.5 rounded-full">
+            {vehicle.year}
+          </span>
         </div>
 
         {/* Body */}
-        <div className="p-5 flex flex-col flex-1">
-          {/* Name + year */}
-          <div className="flex items-baseline justify-between mb-1">
-            <h3 className="font-heading text-forest text-lg font-bold">{vehicle.name}</h3>
-            <span className="text-xs text-forest-muted font-medium">{vehicle.year}</span>
-          </div>
+        <div className="flex flex-col flex-1 p-5">
+          <h3 className="font-heading text-forest text-xl font-bold leading-tight">
+            {vehicle.name}
+          </h3>
 
-          {/* Specs */}
-          <div className="flex items-center gap-3 text-xs text-forest-muted mt-2 mb-4">
-            <span className="flex items-center gap-1">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="w-3.5 h-3.5 text-amber" aria-hidden="true">
-                <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z" />
-              </svg>
-              {vehicle.passengers} {t('passengers')}
-            </span>
-            <span className="w-px h-3 bg-sand" aria-hidden="true" />
-            <span className="flex items-center gap-1">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="w-3.5 h-3.5 text-amber" aria-hidden="true">
-                <path d="M2 3.5A1.5 1.5 0 0 1 3.5 2h9A1.5 1.5 0 0 1 14 3.5v1A1.5 1.5 0 0 1 12.5 6h-9A1.5 1.5 0 0 1 2 4.5v-1ZM2 9a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V9Z" />
-              </svg>
-              {vehicle.luggage.large}+{vehicle.luggage.carryOn}
-            </span>
-            <span className="w-px h-3 bg-sand" aria-hidden="true" />
-            <span>{vehicle.drive}</span>
-          </div>
+          {/* Specs — text only, no icons */}
+          <p className="mt-2 text-xs text-forest-muted">
+            {vehicle.passengers} pax
+            <span className="mx-1.5 text-sand-dark">·</span>
+            {vehicle.drive}
+            <span className="mx-1.5 text-sand-dark">·</span>
+            {vehicle.luggage.large + vehicle.luggage.carryOn} {t('luggage')}
+          </p>
 
-          {/* Price — USD only */}
-          <div className="mt-auto">
+          {/* Price */}
+          <div className="mt-4 pt-4 border-t border-sand">
             {isLimited ? (
-              <div className="bg-sand rounded-2xl px-4 py-3 text-center">
-                <p className="text-forest font-semibold text-sm">{t('checkAvailability')}</p>
-              </div>
+              <p className="text-forest font-semibold text-sm">{t('checkAvailability')}</p>
             ) : (
-              <div className="flex items-end justify-between">
-                <div>
-                  <p className="text-2xl font-heading font-bold text-forest">
-                    {formatUSD(usdPrice)}
-                    <span className="text-sm font-normal text-forest-muted ml-1">{t('perDay')}</span>
-                  </p>
-                  <p className="text-xs text-forest-muted">{t('deposit')}: ${vehicle.deposit}</p>
-                </div>
-              </div>
+              <>
+                <p className="font-heading text-forest text-2xl font-bold">
+                  {priceDisplay}
+                  <span className="text-sm font-normal text-forest-muted ml-1.5">{t('perDay')}</span>
+                </p>
+                <p className="text-xs text-forest-muted mt-0.5">{t('deposit')}: ${vehicle.deposit}</p>
+              </>
             )}
           </div>
 
@@ -108,7 +112,7 @@ export default function FleetCard({ vehicle, index = 0 }: FleetCardProps) {
             </button>
             <Link
               href={`/vehicles/${vehicle.slug}` as any}
-              className="px-4 py-2.5 rounded-xl border border-sand hover:border-forest hover:text-forest text-forest-muted text-xs font-medium transition-all duration-200 flex items-center whitespace-nowrap"
+              className="px-4 py-2.5 rounded-xl bg-cream hover:bg-sand text-forest text-xs font-medium transition-all duration-200 flex items-center whitespace-nowrap"
             >
               {t('viewDetail')}
             </Link>

@@ -5,9 +5,11 @@ import { motion } from 'framer-motion';
 import { useTranslations } from 'next-intl';
 import { fleet, type Vehicle } from '@/lib/fleet';
 import { isSantaFeAvailable } from '@/lib/utils';
+import { useCurrencyRate } from '@/lib/useCurrencyRate';
 import FleetCard from './FleetCard';
 
 type FilterKey = 'all' | 'economy' | 'suv' | '4x4' | '7pax';
+type Currency = 'CRC' | 'USD';
 
 const filters: { key: FilterKey; labelKey: string }[] = [
   { key: 'all', labelKey: 'filterAll' },
@@ -19,28 +21,23 @@ const filters: { key: FilterKey; labelKey: string }[] = [
 
 function applyFilter(vehicles: Vehicle[], filter: FilterKey): Vehicle[] {
   switch (filter) {
-    case 'economy':
-      return vehicles.filter((v) => v.category === 'economy');
-    case 'suv':
-      return vehicles.filter((v) => v.category === 'suv');
-    case '4x4':
-      return vehicles.filter((v) => v.drive === '4x4');
-    case '7pax':
-      return vehicles.filter((v) => v.passengers >= 7);
-    default:
-      return vehicles;
+    case 'economy': return vehicles.filter((v) => v.category === 'economy');
+    case 'suv':     return vehicles.filter((v) => v.category === 'suv');
+    case '4x4':     return vehicles.filter((v) => v.drive === '4x4');
+    case '7pax':    return vehicles.filter((v) => v.passengers >= 7);
+    default:        return vehicles;
   }
 }
 
 export default function FleetGrid() {
   const t = useTranslations('fleet');
   const [active, setActive] = useState<FilterKey>('all');
+  const [currency, setCurrency] = useState<Currency>('CRC');
+  const { rate, isValid } = useCurrencyRate();
 
-  const visibleFleet = fleet.filter((v) => {
-    if (v.note === 'availability-limited' && !isSantaFeAvailable()) return false;
-    return true;
-  });
-
+  const visibleFleet = fleet.filter(
+    (v) => !(v.note === 'availability-limited' && !isSantaFeAvailable())
+  );
   const filtered = applyFilter(visibleFleet, active);
 
   return (
@@ -82,7 +79,7 @@ export default function FleetGrid() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
-          className="flex flex-wrap justify-center gap-2 mb-10"
+          className="flex flex-wrap justify-center gap-2 mb-6"
         >
           {filters.map(({ key, labelKey }) => (
             <button
@@ -99,30 +96,54 @@ export default function FleetGrid() {
           ))}
         </motion.div>
 
-        {/* Grid — scroll on mobile, grid on desktop */}
-        {filtered.length === 0 ? (
-          <p className="text-center text-forest-muted py-12">No vehicles match this filter.</p>
-        ) : (
-          <>
-            {/* Mobile: horizontal scroll */}
-            <div className="md:hidden flex gap-4 overflow-x-auto scroll-hide pb-4 -mx-4 px-4">
-              {filtered.map((vehicle, i) => (
-                <div key={vehicle.slug} className="flex-none w-72">
-                  <FleetCard vehicle={vehicle} index={i} />
-                </div>
-              ))}
+        {/* Currency toggle — only when API rate is valid */}
+        {isValid && rate && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="flex justify-center mb-10"
+          >
+            <div className="inline-flex items-center bg-white border border-sand rounded-full p-1 shadow-sm">
+              <button
+                onClick={() => setCurrency('CRC')}
+                className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all duration-200 ${
+                  currency === 'CRC'
+                    ? 'bg-forest text-white shadow-sm'
+                    : 'text-forest-muted hover:text-forest'
+                }`}
+              >
+                ₡ Colones
+              </button>
+              <button
+                onClick={() => setCurrency('USD')}
+                className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all duration-200 ${
+                  currency === 'USD'
+                    ? 'bg-forest text-white shadow-sm'
+                    : 'text-forest-muted hover:text-forest'
+                }`}
+              >
+                $ Dólares
+              </button>
             </div>
-
-            {/* Desktop: grid */}
-            <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {filtered.map((vehicle, i) => (
-                <FleetCard key={vehicle.slug} vehicle={vehicle} index={i} />
-              ))}
-            </div>
-          </>
+          </motion.div>
         )}
 
-        {/* Rate disclaimer */}
+        {/* Carousel — overflow-y:hidden prevents vertical capture on touch */}
+        {filtered.length === 0 ? (
+          <p className="text-center text-forest-muted py-12">No hay vehículos con este filtro.</p>
+        ) : (
+          <div
+            className="flex items-start gap-5 overflow-x-auto overflow-y-hidden pb-4 -mx-4 px-4 sm:-mx-6 sm:px-6 scroll-hide"
+            style={{ touchAction: 'pan-x' }}
+          >
+            {filtered.map((vehicle, i) => (
+              <div key={vehicle.slug} className="flex-none w-72 sm:w-80">
+                <FleetCard vehicle={vehicle} index={i} currency={currency} rate={rate} />
+              </div>
+            ))}
+          </div>
+        )}
+
         <p className="mt-8 text-center text-xs text-forest-muted">
           * {t('rateRef')}
         </p>

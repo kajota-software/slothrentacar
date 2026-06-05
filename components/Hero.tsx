@@ -3,6 +3,8 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useTranslations } from 'next-intl';
+import { fleet } from '@/lib/fleet';
+import { isSantaFeAvailable } from '@/lib/utils';
 import ReservationModal from './ReservationModal';
 
 const fadeUp = {
@@ -21,11 +23,24 @@ const fadeUp = {
 export default function Hero() {
   const t = useTranslations('hero');
   const [modalOpen, setModalOpen] = useState(false);
+  const [pickupDate, setPickupDate] = useState('');
+  const [returnDate, setReturnDate] = useState('');
+  const [vehicleSlug, setVehicleSlug] = useState('');
 
-  function scrollToFleet(e: React.MouseEvent) {
-    e.preventDefault();
-    document.getElementById('fleet')?.scrollIntoView({ behavior: 'smooth' });
+  const today = new Date().toISOString().split('T')[0];
+  const minReturn = pickupDate
+    ? new Date(new Date(pickupDate).getTime() + 86400000).toISOString().split('T')[0]
+    : today;
+
+  const availableVehicles = fleet.filter(
+    (v) => !(v.note === 'availability-limited' && !isSantaFeAvailable())
+  );
+
+  function handleSearch() {
+    setModalOpen(true);
   }
+
+  const selectedVehicle = availableVehicles.find((v) => v.slug === vehicleSlug);
 
   return (
     <>
@@ -54,7 +69,7 @@ export default function Hero() {
         />
 
         {/* Content */}
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-20 text-center">
+        <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-20 text-center">
           {/* Headline */}
           <motion.h1
             className="font-heading text-white leading-[1.05] tracking-tight"
@@ -78,62 +93,119 @@ export default function Hero() {
             </motion.span>
           </motion.h1>
 
-          {/* Subtext */}
+          {/* Adventure subtext */}
           <motion.p
             custom={0.4}
             variants={fadeUp}
             initial="hidden"
             animate="visible"
-            className="mt-8 text-white/70 text-lg md:text-xl leading-relaxed max-w-2xl mx-auto"
+            className="mt-6 text-white/75 text-lg md:text-xl leading-relaxed max-w-lg mx-auto"
           >
             {t('subtext')}
           </motion.p>
 
-          {/* CTAs */}
+          {/* Search form */}
           <motion.div
             custom={0.5}
             variants={fadeUp}
             initial="hidden"
             animate="visible"
-            className="mt-10 flex flex-col sm:flex-row gap-4 justify-center items-center"
+            className="mt-10"
           >
-            {/* Primary: scroll to fleet */}
-            <a
-              href="#fleet"
-              onClick={scrollToFleet}
-              className="group bg-amber hover:bg-amber-dark text-forest-dark font-semibold px-8 py-4 rounded-full text-base transition-all duration-200 hover:scale-105 active:scale-95 shadow-lg shadow-amber/20 w-full sm:w-auto text-center"
+            {/* Card: solo inputs, sin botón */}
+            <div
+              className="rounded-2xl overflow-hidden border border-white/10 shadow-[0_8px_40px_rgba(0,0,0,0.25)]"
+              style={{ background: 'rgba(15,42,31,0.72)', backdropFilter: 'blur(20px)' }}
             >
-              {t('cta')}
-              <span className="ml-2 inline-block transition-transform group-hover:translate-x-1" aria-hidden="true">↓</span>
-            </a>
+              {/* Row 1: Fecha inicio + Fecha fin */}
+              <div className="grid grid-cols-2 divide-x divide-white/10">
+                <div className="px-5 py-4">
+                  <label className="block text-amber text-[10px] font-semibold uppercase tracking-widest mb-1.5">
+                    {t('dateStart')}
+                  </label>
+                  <input
+                    type="date"
+                    min={today}
+                    value={pickupDate}
+                    onChange={(e) => {
+                      setPickupDate(e.target.value);
+                      if (returnDate && returnDate <= e.target.value) setReturnDate('');
+                    }}
+                    className="w-full bg-transparent text-white text-sm focus:outline-none [color-scheme:dark]"
+                  />
+                </div>
+                <div className="px-5 py-4">
+                  <label className="block text-amber text-[10px] font-semibold uppercase tracking-widest mb-1.5">
+                    {t('dateEnd')}
+                  </label>
+                  <input
+                    type="date"
+                    min={minReturn}
+                    value={returnDate}
+                    onChange={(e) => setReturnDate(e.target.value)}
+                    className="w-full bg-transparent text-white text-sm focus:outline-none [color-scheme:dark]"
+                  />
+                </div>
+              </div>
 
-            {/* Secondary: open reservation modal */}
+              {/* Row 2: Vehículo — ancho completo */}
+              <div className="px-5 py-4 border-t border-white/10">
+                <label className="block text-amber text-[10px] font-semibold uppercase tracking-widest mb-1.5">
+                  {t('vehicleLabel')}
+                </label>
+                <select
+                  value={vehicleSlug}
+                  onChange={(e) => setVehicleSlug(e.target.value)}
+                  className="w-full bg-transparent text-white text-sm focus:outline-none [color-scheme:dark]"
+                >
+                  <option value="" className="text-forest bg-forest-dark">{t('vehicleAny')}</option>
+                  {availableVehicles.map((v) => (
+                    <option key={v.slug} value={v.slug} className="text-white bg-forest-dark">
+                      {v.name} {v.year}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+
+            {/* CTA fuera del card */}
             <button
-              onClick={() => setModalOpen(true)}
-              className="flex items-center justify-center gap-2 border border-white/30 hover:border-amber hover:bg-white/10 text-white font-medium px-8 py-4 rounded-full text-base transition-all duration-200 w-full sm:w-auto"
+              onClick={handleSearch}
+              className="mt-4 w-full bg-amber hover:bg-amber-dark text-forest-dark font-semibold px-8 py-4 rounded-2xl text-base transition-all duration-200 hover:scale-[1.01] active:scale-95 shadow-lg shadow-amber/20"
             >
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 text-green-400" aria-hidden="true">
-                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
-              </svg>
-              {t('ctaBook')}
+              {t('searchCta')}
             </button>
           </motion.div>
 
-          {/* Scroll indicator */}
+          {/* Secondary CTA */}
           <motion.div
-            custom={0.9}
+            custom={0.65}
             variants={fadeUp}
             initial="hidden"
             animate="visible"
-            className="mt-20 flex flex-col items-center gap-2 text-white/30"
+            className="mt-6"
           >
-            <div className="w-px h-12 bg-gradient-to-b from-transparent to-white/30" aria-hidden="true" />
-            <span className="text-xs tracking-widest uppercase">Scroll</span>
+            <a
+              href="#fleet"
+              onClick={(e) => {
+                e.preventDefault();
+                document.getElementById('fleet')?.scrollIntoView({ behavior: 'smooth' });
+              }}
+              className="text-white/50 hover:text-white/80 text-sm transition-colors duration-200 inline-flex items-center gap-1"
+            >
+              {t('cta')} ↓
+            </a>
           </motion.div>
         </div>
       </section>
 
-      <ReservationModal open={modalOpen} onClose={() => setModalOpen(false)} />
+      <ReservationModal
+        open={modalOpen}
+        onClose={() => setModalOpen(false)}
+        preselectedVehicle={selectedVehicle}
+        preselectedPickupDate={pickupDate}
+        preselectedReturnDate={returnDate}
+      />
     </>
   );
 }

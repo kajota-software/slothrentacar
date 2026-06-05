@@ -38,6 +38,8 @@ interface Props {
   open: boolean;
   onClose: () => void;
   preselectedVehicle?: Vehicle;
+  preselectedPickupDate?: string;
+  preselectedReturnDate?: string;
 }
 
 /* ── Price calculator ── */
@@ -105,7 +107,7 @@ function buildMessage(booking: BookingInfo, contact: ContactInfo, t: ReturnType<
 }
 
 /* ── Component ── */
-export default function ReservationModal({ open, onClose, preselectedVehicle }: Props) {
+export default function ReservationModal({ open, onClose, preselectedVehicle, preselectedPickupDate, preselectedReturnDate }: Props) {
   const t = useTranslations('modal');
 
   const [step, setStep] = useState(1);
@@ -128,10 +130,13 @@ export default function ReservationModal({ open, onClose, preselectedVehicle }: 
   const scrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (preselectedVehicle) {
-      setBooking((s) => ({ ...s, vehicleSlug: preselectedVehicle.slug }));
-    }
-  }, [preselectedVehicle]);
+    setBooking((s) => ({
+      ...s,
+      vehicleSlug: preselectedVehicle?.slug ?? s.vehicleSlug,
+      pickupDate: preselectedPickupDate ?? s.pickupDate,
+      returnDate: preselectedReturnDate ?? s.returnDate,
+    }));
+  }, [preselectedVehicle, preselectedPickupDate, preselectedReturnDate]);
 
   useEffect(() => {
     if (!open) {

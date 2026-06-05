@@ -12,9 +12,14 @@
     "headline1": "Explore",
     "headline2": "Costa Rica",
     "headline3": "your way",
-    "subtext": "We believe travel isn't about rushing — it's about discovering incredible landscapes and creating unforgettable experiences. Sloth Rent a Car was born to offer a more personal, transparent and close service.",
-    "cta": "See our fleet",
-    "ctaBook": "Make a reservation"
+    "subtext": "Which vehicle starts your adventure?",
+    "searchLabel": "When do you want to travel?",
+    "dateStart": "Start date",
+    "dateEnd": "End date",
+    "vehicleLabel": "Vehicle",
+    "vehicleAny": "Any vehicle",
+    "searchCta": "Book a vehicle",
+    "cta": "See our fleet"
   },
   "trust": {
     "title": "Why choose us?",
@@ -46,7 +51,9 @@
     "checkAvailability": "Check availability",
     "available": "Available",
     "availabilityLimited": "Check availability",
-    "rateRef": "Estimated prices in USD. Reference exchange rate."
+    "rateRef": "Estimated prices in USD. Reference exchange rate.",
+    "viewCarousel": "Carousel",
+    "viewGrid": "Grid"
   },
   "howItWorks": {
     "title": "How it works",

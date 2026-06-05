@@ -12,9 +12,14 @@
     "headline1": "Explora",
     "headline2": "Costa Rica",
     "headline3": "a tu ritmo",
-    "subtext": "Sloth Rent a Car nació para ofrecer un servicio más personal, transparente y cercano. Relájate, toma las llaves y descubre Costa Rica a tu manera.",
-    "cta": "Ver nuestra flota",
-    "ctaBook": "Hacer una reserva"
+    "subtext": "¿Con qué vehículo empieza tu aventura?",
+    "searchLabel": "¿Cuándo quieres viajar?",
+    "dateStart": "Fecha inicio",
+    "dateEnd": "Fecha fin",
+    "vehicleLabel": "Vehículo",
+    "vehicleAny": "Cualquier vehículo",
+    "searchCta": "Reservar vehículo",
+    "cta": "Ver nuestra flota"
   },
   "trust": {
     "title": "¿Por qué elegirnos?",
@@ -46,7 +51,9 @@
     "checkAvailability": "Consultar disponibilidad",
     "available": "Disponible",
     "availabilityLimited": "Consultar disponibilidad",
-    "rateRef": "Precios estimados en USD. Tipo de cambio de referencia."
+    "rateRef": "Precios estimados en USD. Tipo de cambio de referencia.",
+    "viewCarousel": "Carrusel",
+    "viewGrid": "Cuadrícula"
   },
   "howItWorks": {
     "title": "Cómo funciona",

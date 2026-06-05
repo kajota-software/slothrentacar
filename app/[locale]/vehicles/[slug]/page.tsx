@@ -3,7 +3,7 @@ import { notFound } from 'next/navigation';
 import { getTranslations } from 'next-intl/server';
 import { Link } from '@/i18n/navigation';
 import { fleet, getVehicleBySlug, getRelatedVehicles, vehicleEditorial } from '@/lib/fleet';
-import { formatUSD, crcToUsd, isSantaFeAvailable } from '@/lib/utils';
+import { isSantaFeAvailable } from '@/lib/utils';
 import VehicleGallery from '@/components/VehicleGallery';
 import FleetCard from '@/components/FleetCard';
 import VehicleBooking from '@/components/VehicleBooking';
@@ -48,7 +48,6 @@ export default async function VehiclePage({ params }: Props) {
   if (!vehicle) notFound();
 
   const related = getRelatedVehicles(slug, 3);
-  const usdPrice = crcToUsd(vehicle.pricePerDayCRC);
   const editorial = vehicleEditorial[vehicle.slug];
   const editorialText = locale === 'es' ? editorial?.es : editorial?.en;
   const isLimited = vehicle.note === 'availability-limited' && !isSantaFeAvailable();
@@ -129,19 +128,27 @@ export default async function VehiclePage({ params }: Props) {
             </p>
 
             {/* Specs */}
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 mt-8">
-              {specs.map(({ label, value }) => (
-                <div key={label} className="bg-white rounded-2xl px-4 py-3 border border-sand">
-                  <p className="text-xs text-forest-muted font-medium">{label}</p>
-                  <p className="text-sm text-forest font-semibold mt-0.5">{String(value)}</p>
-                </div>
-              ))}
+            <div className="mt-8 rounded-2xl border border-sand overflow-hidden bg-white">
+              <div className="grid grid-cols-2">
+                {specs.map(({ label, value }, i) => (
+                  <div
+                    key={label}
+                    className={[
+                      'px-5 py-4',
+                      i % 2 === 0 ? 'border-r border-sand' : '',
+                      i < specs.length - 2 ? 'border-b border-sand' : '',
+                    ].join(' ')}
+                  >
+                    <p className="text-[11px] text-forest-muted font-medium uppercase tracking-wide">{label}</p>
+                    <p className="text-sm text-forest font-semibold mt-1 leading-snug">{String(value)}</p>
+                  </div>
+                ))}
+              </div>
             </div>
 
             {/* Client booking component (price + modal trigger) */}
             <VehicleBooking
               vehicle={vehicle}
-              pricePerDayUSD={formatUSD(usdPrice)}
               isLimited={isLimited}
             />
 
