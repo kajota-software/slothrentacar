@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useTranslations } from 'next-intl';
 import { fleet, type Vehicle } from '@/lib/fleet';
-import { formatUSD, crcToUsd, getExchangeRate, buildWhatsAppUrl, isSantaFeAvailable } from '@/lib/utils';
+import { formatUSD, formatCRC, crcToUsd, usdToCrc, getExchangeRate, buildWhatsAppUrl, isSantaFeAvailable } from '@/lib/utils';
 
 /* ── Country codes ── */
 const COUNTRY_CODES = [
@@ -40,41 +40,57 @@ interface Props {
   preselectedVehicle?: Vehicle;
   preselectedPickupDate?: string;
   preselectedReturnDate?: string;
+  currency?: 'CRC' | 'USD';
+  rate?: number | null;
 }
 
-/* ── Price calculator ── */
+/* ── Price calculator — base CRC ── */
 function calcDays(pickup: string, ret: string): number {
   if (!pickup || !ret) return 0;
   const diff = new Date(ret).getTime() - new Date(pickup).getTime();
   return Math.max(0, Math.floor(diff / (1000 * 60 * 60 * 24)));
 }
 
-function usePrice(booking: BookingInfo) {
-  const rate = getExchangeRate();
+function usePrice(booking: BookingInfo, liveRate: number | null) {
+  const rate = liveRate ?? getExchangeRate();
   const vehicle = fleet.find((v) => v.slug === booking.vehicleSlug);
   const days = calcDays(booking.pickupDate, booking.returnDate);
 
-  const vehicleUSD = crcToUsd((vehicle?.pricePerDayCRC ?? 0) * days, rate);
-  const zdUSD = booking.extraZeroDeductible ? 15 * days : 0;
-  const csUSD = booking.extraChildSeat ? 10 * days : 0;
-  const totalUSD = vehicleUSD + zdUSD + csUSD;
-  const depositUSD = totalUSD * 0.5;
+  const vehicleCRC = (vehicle?.pricePerDayCRC ?? 0) * days;
+  // extras fijados en USD → convertir a CRC con tipo de cambio del día
+  const zdCRC = booking.extraZeroDeductible ? usdToCrc(15 * days, rate) : 0;
+  const csCRC = booking.extraChildSeat ? usdToCrc(10 * days, rate) : 0;
+  const totalCRC = vehicleCRC + zdCRC + csCRC;
+  const depositCRC = totalCRC * 0.5;
 
-  return { vehicle, days, vehicleUSD, zdUSD, csUSD, totalUSD, depositUSD };
+  return { vehicle, days, vehicleCRC, zdCRC, csCRC, totalCRC, depositCRC, rate };
+}
+
+/* Formatea en la moneda seleccionada */
+function fmt(crc: number, currency: 'CRC' | 'USD', rate: number): string {
+  return currency === 'USD' ? formatUSD(crcToUsd(crc, rate)) : formatCRC(crc);
 }
 
 /* ── WhatsApp message ── */
-function buildMessage(booking: BookingInfo, contact: ContactInfo, t: ReturnType<typeof useTranslations>): string {
-  const price = (() => {
-    const rate = getExchangeRate();
-    const vehicle = fleet.find((v) => v.slug === booking.vehicleSlug);
-    const days = calcDays(booking.pickupDate, booking.returnDate);
-    const vehicleUSD = crcToUsd((vehicle?.pricePerDayCRC ?? 0) * days, rate);
-    const zdUSD = booking.extraZeroDeductible ? 15 * days : 0;
-    const csUSD = booking.extraChildSeat ? 10 * days : 0;
-    const totalUSD = vehicleUSD + zdUSD + csUSD;
-    return { vehicle, days, totalUSD, depositUSD: totalUSD * 0.5 };
-  })();
+function buildMessage(
+  booking: BookingInfo,
+  contact: ContactInfo,
+  currency: 'CRC' | 'USD',
+  rate: number,
+  t: ReturnType<typeof useTranslations>,
+): string {
+  const vehicle = fleet.find((v) => v.slug === booking.vehicleSlug);
+  const days = calcDays(booking.pickupDate, booking.returnDate);
+
+  const vehicleCRC = (vehicle?.pricePerDayCRC ?? 0) * days;
+  const zdCRC = booking.extraZeroDeductible ? usdToCrc(15 * days, rate) : 0;
+  const csCRC = booking.extraChildSeat ? usdToCrc(10 * days, rate) : 0;
+  const totalCRC = vehicleCRC + zdCRC + csCRC;
+  const depositCRC = totalCRC * 0.5;
+
+  const totalDisplay = fmt(totalCRC, currency, rate);
+  const depositDisplay = fmt(depositCRC, currency, rate);
+  const currencyLabel = currency === 'USD' ? 'USD' : 'CRC';
 
   const extras: string[] = [];
   if (booking.extraZeroDeductible) extras.push('Cobertura 0 deducible (+$15/día)');
@@ -92,22 +108,31 @@ function buildMessage(booking: BookingInfo, contact: ContactInfo, t: ReturnType<
 📱 WhatsApp: ${contact.countryCode} ${contact.phone}
 📧 Email: ${contact.email || '—'}
 
-🚗 Vehículo: ${price.vehicle ? `${price.vehicle.name} ${price.vehicle.year}` : '—'}
+🚗 Vehículo: ${vehicle ? `${vehicle.name} ${vehicle.year}` : '—'}
 📍 Entrega: ${locationLabels[booking.pickupLocation] ?? booking.pickupLocation}
 📅 Fecha entrega: ${booking.pickupDate}
 📅 Fecha devolución: ${booking.returnDate}
-🗓 Días: ${price.days}
+🗓 Días: ${days}
 
 ➕ Extras: ${extras.length > 0 ? extras.join(', ') : 'Ninguno'}
 
-💰 Total estimado: ~${formatUSD(price.totalUSD)} USD
-💳 Anticipo requerido (50%): ~${formatUSD(price.depositUSD)} USD
+💰 Total estimado: ~${totalDisplay} ${currencyLabel}
+💳 Anticipo requerido (50%): ~${depositDisplay} ${currencyLabel}
+💱 Tipo de cambio: ₡${rate.toLocaleString('es-CR')}/USD
 
 📝 Notas: ${booking.notes || '—'}`;
 }
 
 /* ── Component ── */
-export default function ReservationModal({ open, onClose, preselectedVehicle, preselectedPickupDate, preselectedReturnDate }: Props) {
+export default function ReservationModal({
+  open,
+  onClose,
+  preselectedVehicle,
+  preselectedPickupDate,
+  preselectedReturnDate,
+  currency = 'CRC',
+  rate: rateProp = null,
+}: Props) {
   const t = useTranslations('modal');
 
   const [step, setStep] = useState(1);
@@ -145,7 +170,7 @@ export default function ReservationModal({ open, onClose, preselectedVehicle, pr
     }
   }, [open]);
 
-  const price = usePrice(booking);
+  const price = usePrice(booking, rateProp);
 
   const availableVehicles = fleet.filter(
     (v) => !(v.note === 'availability-limited' && !isSantaFeAvailable())
@@ -185,7 +210,7 @@ export default function ReservationModal({ open, onClose, preselectedVehicle, pr
 
   function handleSend() {
     if (!validateStep2()) return;
-    const msg = buildMessage(booking, contact, t);
+    const msg = buildMessage(booking, contact, currency, price.rate, t);
     window.open(buildWhatsAppUrl(msg), '_blank', 'noopener,noreferrer');
     onClose();
   }
@@ -268,7 +293,7 @@ export default function ReservationModal({ open, onClose, preselectedVehicle, pr
                       <option value="">{t('selectVehicle')}</option>
                       {availableVehicles.map((v) => (
                         <option key={v.slug} value={v.slug}>
-                          {v.name} {v.year} — {formatUSD(crcToUsd(v.pricePerDayCRC))}/día
+                          {v.name} {v.year} — {fmt(v.pricePerDayCRC, currency, price.rate)}/día
                         </option>
                       ))}
                     </select>
@@ -371,29 +396,29 @@ export default function ReservationModal({ open, onClose, preselectedVehicle, pr
 
                       <div className="flex justify-between text-forest-muted">
                         <span>{price.vehicle.name} × {price.days} {price.days === 1 ? 'día' : 'días'}</span>
-                        <span className="font-medium text-forest">{formatUSD(price.vehicleUSD)}</span>
+                        <span className="font-medium text-forest">{fmt(price.vehicleCRC, currency, price.rate)}</span>
                       </div>
-                      {price.zdUSD > 0 && (
+                      {price.zdCRC > 0 && (
                         <div className="flex justify-between text-forest-muted">
                           <span>0 deducible × {price.days}d</span>
-                          <span className="font-medium text-forest">{formatUSD(price.zdUSD)}</span>
+                          <span className="font-medium text-forest">{fmt(price.zdCRC, currency, price.rate)}</span>
                         </div>
                       )}
-                      {price.csUSD > 0 && (
+                      {price.csCRC > 0 && (
                         <div className="flex justify-between text-forest-muted">
                           <span>Silla niños × {price.days}d</span>
-                          <span className="font-medium text-forest">{formatUSD(price.csUSD)}</span>
+                          <span className="font-medium text-forest">{fmt(price.csCRC, currency, price.rate)}</span>
                         </div>
                       )}
 
                       <div className="border-t border-sand-dark pt-2 mt-2">
                         <div className="flex justify-between font-semibold text-forest">
                           <span>{t('totalEstimated')}</span>
-                          <span>{formatUSD(price.totalUSD)} USD</span>
+                          <span>{fmt(price.totalCRC, currency, price.rate)} {currency}</span>
                         </div>
                         <div className="flex justify-between text-amber font-semibold mt-1">
                           <span>{t('depositRequired')}</span>
-                          <span>{formatUSD(price.depositUSD)} USD</span>
+                          <span>{fmt(price.depositCRC, currency, price.rate)} {currency}</span>
                         </div>
                       </div>
 
@@ -417,7 +442,9 @@ export default function ReservationModal({ open, onClose, preselectedVehicle, pr
                   {price.vehicle && (
                     <div className="bg-sand rounded-2xl px-4 py-3 flex items-center justify-between text-sm">
                       <span className="font-semibold text-forest">{price.vehicle.name} {price.vehicle.year}</span>
-                      <span className="text-forest-muted">{price.days}d · {formatUSD(price.totalUSD)} USD</span>
+                      <span className="text-forest-muted">
+                        {price.days}d · {fmt(price.totalCRC, currency, price.rate)} {currency}
+                      </span>
                     </div>
                   )}
 

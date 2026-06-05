@@ -124,6 +124,8 @@ export default function FleetCard({ vehicle, index = 0, currency = 'CRC', rate }
         open={modalOpen}
         onClose={() => setModalOpen(false)}
         preselectedVehicle={vehicle}
+        currency={currency}
+        rate={rate}
       />
     </>
   );

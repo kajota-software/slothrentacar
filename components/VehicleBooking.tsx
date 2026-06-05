@@ -86,6 +86,8 @@ export default function VehicleBooking({ vehicle, isLimited }: Props) {
         open={modalOpen}
         onClose={() => setModalOpen(false)}
         preselectedVehicle={vehicle}
+        currency={currency}
+        rate={rate}
       />
     </>
   );
