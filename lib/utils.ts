@@ -31,7 +31,7 @@ export function isSantaFeAvailable(): boolean {
 }
 
 export function getWhatsAppNumber(): string {
-  return process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? '50672816080';
+  return process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? '50671896080';
 }
 
 export function buildWhatsAppUrl(message: string): string {

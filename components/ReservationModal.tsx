@@ -71,13 +71,21 @@ function fmt(crc: number, currency: 'CRC' | 'USD', rate: number): string {
   return currency === 'USD' ? formatUSD(crcToUsd(crc, rate)) : formatCRC(crc);
 }
 
+/* ── Helpers ── */
+const MONTHS_ES = ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
+
+function fmtDate(iso: string): string {
+  if (!iso) return '—';
+  const [y, m, d] = iso.split('-');
+  return `${parseInt(d)} ${MONTHS_ES[parseInt(m) - 1]} ${y}`;
+}
+
 /* ── WhatsApp message ── */
 function buildMessage(
   booking: BookingInfo,
   contact: ContactInfo,
   currency: 'CRC' | 'USD',
   rate: number,
-  t: ReturnType<typeof useTranslations>,
 ): string {
   const vehicle = fleet.find((v) => v.slug === booking.vehicleSlug);
   const days = calcDays(booking.pickupDate, booking.returnDate);
@@ -93,34 +101,38 @@ function buildMessage(
   const currencyLabel = currency === 'USD' ? 'USD' : 'CRC';
 
   const extras: string[] = [];
-  if (booking.extraZeroDeductible) extras.push('Cobertura 0 deducible (+$15/día)');
-  if (booking.extraChildSeat) extras.push('Silla para niños (+$10/día)');
+  if (booking.extraZeroDeductible) extras.push('0 deducible (+$15/dia)');
+  if (booking.extraChildSeat) extras.push('Silla para ninos (+$10/dia)');
 
   const locationLabels: Record<string, string> = {
     turrialba: 'Sucursal Turrialba',
-    airport: 'Aeropuerto Juan Santamaría (SJO)',
-    other: booking.notes ? `Otro (ver notas)` : 'Otro',
+    airport: 'Aeropuerto Juan Santamaria (SJO)',
+    other: booking.notes ? 'Otro (ver notas)' : 'Otro',
   };
 
-  return `🦥 *Nueva reserva — Sloth Rent a Car*
+  const sep = '━━━━━━━━━━━━━━━━━━━━';
 
-👤 Cliente: ${contact.name}
-📱 WhatsApp: ${contact.countryCode} ${contact.phone}
-📧 Email: ${contact.email || '—'}
+  return `*SLOTH RENT A CAR*
+*Nueva solicitud de reserva*
+${sep}
 
-🚗 Vehículo: ${vehicle ? `${vehicle.name} ${vehicle.year}` : '—'}
-📍 Entrega: ${locationLabels[booking.pickupLocation] ?? booking.pickupLocation}
-📅 Fecha entrega: ${booking.pickupDate}
-📅 Fecha devolución: ${booking.returnDate}
-🗓 Días: ${days}
+*Vehiculo:* ${vehicle ? `${vehicle.name} ${vehicle.year}` : '—'}
+*Entrega:* ${locationLabels[booking.pickupLocation] ?? booking.pickupLocation}
+*Recogida:* ${fmtDate(booking.pickupDate)}
+*Devolucion:* ${fmtDate(booking.returnDate)}
+*Dias:* ${days}
+*Extras:* ${extras.length > 0 ? extras.join(' | ') : 'Ninguno'}
 
-➕ Extras: ${extras.length > 0 ? extras.join(', ') : 'Ninguno'}
+${sep}
+*Total estimado:* ~${totalDisplay} ${currencyLabel}
+*Anticipo (50%):* ~${depositDisplay} ${currencyLabel}
+_T/C referencia: ${rate.toLocaleString('es-CR')} CRC/USD_
 
-💰 Total estimado: ~${totalDisplay} ${currencyLabel}
-💳 Anticipo requerido (50%): ~${depositDisplay} ${currencyLabel}
-💱 Tipo de cambio: ₡${rate.toLocaleString('es-CR')}/USD
-
-📝 Notas: ${booking.notes || '—'}`;
+${sep}
+*Nombre:* ${contact.name}
+*WhatsApp:* ${contact.countryCode} ${contact.phone}
+*Email:* ${contact.email || '—'}
+*Notas:* ${booking.notes || '—'}`;
 }
 
 /* ── Component ── */
@@ -210,7 +222,7 @@ export default function ReservationModal({
 
   function handleSend() {
     if (!validateStep2()) return;
-    const msg = buildMessage(booking, contact, currency, price.rate, t);
+    const msg = buildMessage(booking, contact, currency, price.rate);
     window.open(buildWhatsAppUrl(msg), '_blank', 'noopener,noreferrer');
     onClose();
   }

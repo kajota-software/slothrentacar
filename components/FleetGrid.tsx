@@ -51,7 +51,7 @@ export default function FleetGrid() {
             viewport={{ once: true }}
             className="text-amber text-sm font-medium uppercase tracking-widest mb-3"
           >
-            6 vehículos
+            {visibleFleet.length} vehículos
           </motion.p>
           <motion.h2
             initial={{ opacity: 0, y: 20 }}

@@ -6,6 +6,7 @@ import { useTranslations } from 'next-intl';
 import ReservationModal from './ReservationModal';
 
 const destinationGradients = [
+  'from-[#0a2e3a] via-[#0c5468] to-[#0e7a8c]',
   'from-forest-dark via-forest to-forest-light',
   'from-[#1a3a2a] via-[#2d5a3d] to-[#1b4332]',
   'from-[#0f2a1f] via-[#1b4332] to-[#2d6a4f]',

@@ -1,8 +1,10 @@
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
+import { getWhatsAppNumber } from '@/lib/utils';
 
 export default function Footer() {
   const t = useTranslations('footer');
+  const waNumber = getWhatsAppNumber();
 
   return (
     <footer className="bg-forest-dark text-white">
@@ -31,7 +33,7 @@ export default function Footer() {
               </p>
               <p className="flex items-center gap-2">
                 <span className="text-amber" aria-hidden="true">📱</span>
-                <a href="tel:+50672816080" className="hover:text-amber transition-colors">
+                <a href={`tel:+${waNumber}`} className="hover:text-amber transition-colors">
                   {t('whatsapp')}
                 </a>
               </p>
@@ -100,7 +102,7 @@ export default function Footer() {
 
             <div className="mt-6">
               <a
-                href="https://wa.me/50672816080"
+                href={`https://wa.me/${waNumber}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 bg-amber hover:bg-amber-dark text-forest-dark font-semibold text-sm px-5 py-2.5 rounded-full transition-all duration-200 hover:scale-105 active:scale-95"

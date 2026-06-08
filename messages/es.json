@@ -88,6 +88,11 @@
     "subtitle": "Desde Turrialba, Costa Rica entera está al alcance de tu mano",
     "items": [
       {
+        "name": "Caribe Costarricense",
+        "desc": "Puerto Viejo, Cahuita y las playas de Limón están a pocas horas desde Turrialba. Cultura afrocaribeña, arrecifes de coral y jungla tropical. La ruta más cercana para escapar al mar.",
+        "tag": "Recomendado: Suzuki Vitara o Toyota Rush"
+      },
+      {
         "name": "Arenal y La Fortuna",
         "desc": "Volcanes, aguas termales y selva tropical. Recomendamos el Vitara 4×4 para las rutas de montaña.",
         "tag": "Recomendado: Vitara 4×4"
@@ -161,7 +166,7 @@
       },
       {
         "q": "¿Cómo funciona el depósito de garantía?",
-        "a": "El depósito de garantía es de $400 USD para vehículos económicos (Agya, Swift) y $500 USD para SUV. Se paga por tarjeta de crédito o transferencia. Se reembolsa en 5–15 días hábiles tras la inspección sin incidentes."
+        "a": "El depósito de garantía es de $400 USD para vehículos económicos (Agya, Swift) y $500 USD para SUV. Se paga por tarjeta de crédito o transferencia bancaria. Se reembolsa en 5–15 días hábiles, una vez devuelto el vehículo e inspeccionado sin daños, multas ni cargos pendientes. Sloth Rent a Car podrá deducir del depósito los siguientes conceptos: daños al vehículo no cubiertos por el seguro, pérdida o daño de llaves/accesorios/documentos, combustible faltante, multas de tránsito, peajes pendientes, limpieza extraordinaria por suciedad excesiva, y cargos por devolución tardía."
       },
       {
         "q": "¿Cuál es la política de cancelación?",
@@ -181,7 +186,7 @@
       },
       {
         "q": "¿Cuál es el requisito de edad y documentación?",
-        "a": "Se requiere tener mínimo 23 años (algunos modelos 21+), licencia de conducir vigente válida en Costa Rica, pasaporte o cédula, y tarjeta de crédito para el depósito de garantía."
+        "a": "Se requiere tener mínimo 25 años, licencia de conducir vigente válida en Costa Rica, pasaporte o cédula, y tarjeta de crédito para el depósito de garantía."
       }
     ]
   },
@@ -189,7 +194,7 @@
     "tagline": "Explora Costa Rica a tu propio ritmo",
     "address": "Plaza Nuri, frente a entrada principal del IET",
     "city": "Turrialba, Cartago, Costa Rica",
-    "whatsapp": "+506 7281-6080",
+    "whatsapp": "+506 7189-6080",
     "delivery": "Entrega en: Turrialba · Aeropuerto SJO",
     "links": {
       "fleet": "Flota",
@@ -210,7 +215,7 @@
     "name": "Nombre completo",
     "namePlaceholder": "Ej. Ana García",
     "phone": "WhatsApp",
-    "phonePlaceholder": "7281-6080",
+    "phonePlaceholder": "7189-6080",
     "email": "Email (opcional)",
     "emailPlaceholder": "tu@email.com",
     "vehicle": "Vehículo",
@@ -276,6 +281,23 @@
     "relatedTitle": "Otros vehículos que te pueden interesar",
     "checkAvailability": "Consultar disponibilidad",
     "availabilityLimited": "Disponibilidad limitada — consulta por WhatsApp"
+  },
+  "about": {
+    "label": "Sobre nosotros",
+    "title": "Nuestra historia",
+    "subtitle": "Conoce quiénes somos y por qué hacemos lo que hacemos",
+    "originTitle": "¿Cómo nació Sloth Rent a Car?",
+    "originParagraphs": [
+      "Comenzamos con el objetivo de brindar un servicio más personal, transparente y cercano, donde cada cliente se sienta respaldado desde el momento de su reserva hasta la devolución del vehículo.",
+      "Hoy seguimos creciendo con la misma misión: ayudar a nuestros clientes a explorar Costa Rica con libertad, comodidad y confianza."
+    ],
+    "slothTitle": "¿Por qué el nombre Sloth?",
+    "slothParagraphs": [
+      "El perezoso es uno de los símbolos más queridos de Costa Rica. Representa la conexión con la naturaleza, la tranquilidad y la forma única de disfrutar cada momento que caracteriza a nuestro país.",
+      "En Sloth Rent a Car creemos que viajar no se trata de correr de un lugar a otro, sino de explorar a tu propio ritmo, descubrir paisajes increíbles y crear experiencias inolvidables.",
+      "Nuestro nombre refleja esa filosofía: conducir con libertad, disfrutar el camino y vivir Costa Rica de una manera auténtica.",
+      "Relájate, toma las llaves y explora Costa Rica a tu manera."
+    ]
   },
   "notFound": {
     "title": "¡Ups! Esta página no existe",

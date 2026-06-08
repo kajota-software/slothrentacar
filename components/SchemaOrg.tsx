@@ -6,7 +6,7 @@ export default function SchemaOrg() {
     description:
       'Alquiler de automóviles en Costa Rica. Flota moderna con seguro incluido, entrega en Turrialba y Aeropuerto Juan Santamaría (SJO).',
     url: 'https://slothrentacar.com',
-    telephone: '+50672816080',
+    telephone: '+50671896080',
     email: 'info@slothrentacar.com',
     address: {
       '@type': 'PostalAddress',

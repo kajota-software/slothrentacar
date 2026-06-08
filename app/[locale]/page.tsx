@@ -6,6 +6,7 @@ import FleetGrid from '@/components/FleetGrid';
 import HowItWorks from '@/components/HowItWorks';
 import Destinations from '@/components/Destinations';
 import Testimonials from '@/components/Testimonials';
+import About from '@/components/About';
 import FAQ from '@/components/FAQ';
 import SchemaOrg from '@/components/SchemaOrg';
 
@@ -37,6 +38,7 @@ export default function HomePage() {
       <HowItWorks />
       <Destinations />
       <Testimonials />
+      <About />
       <FAQ />
     </>
   );

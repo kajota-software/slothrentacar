@@ -88,6 +88,11 @@
     "subtitle": "From Turrialba, all of Costa Rica is within reach",
     "items": [
       {
+        "name": "Costa Rican Caribbean",
+        "desc": "Puerto Viejo, Cahuita, and the beaches of Limón are just a few hours from Turrialba. Afro-Caribbean culture, coral reefs, and tropical jungle — the closest escape to the sea.",
+        "tag": "Recommended: Suzuki Vitara or Toyota Rush"
+      },
+      {
         "name": "Arenal & La Fortuna",
         "desc": "Volcanoes, hot springs, and tropical jungle. We recommend the Vitara 4×4 for mountain routes.",
         "tag": "Recommended: Vitara 4×4"
@@ -161,7 +166,7 @@
       },
       {
         "q": "How does the security deposit work?",
-        "a": "The security deposit is $400 USD for economy vehicles (Agya, Swift) and $500 USD for SUVs. Paid by credit card or bank transfer. Refunded within 5–15 business days after inspection with no incidents."
+        "a": "The security deposit is $400 USD for economy vehicles (Agya, Swift) and $500 USD for SUVs. Paid by credit card or bank transfer. Refunded within 5–15 business days once the vehicle is returned and inspected with no damages, fines, or outstanding charges. Sloth Rent a Car may deduct from the deposit: damages not covered by insurance, lost or damaged keys/accessories/documents, missing fuel, traffic fines, pending tolls, extraordinary cleaning for excessive dirt, and charges for late return."
       },
       {
         "q": "What is the cancellation policy?",
@@ -181,7 +186,7 @@
       },
       {
         "q": "What are the age and documentation requirements?",
-        "a": "You must be at least 23 years old (21+ for some models), hold a valid driver's license recognized in Costa Rica, have a passport or national ID, and a credit card for the security deposit."
+        "a": "You must be at least 25 years old, hold a valid driver's license recognized in Costa Rica, have a passport or national ID, and a credit card for the security deposit."
       }
     ]
   },
@@ -189,7 +194,7 @@
     "tagline": "Explore Costa Rica at your own pace",
     "address": "Plaza Nuri, opposite the main IET entrance",
     "city": "Turrialba, Cartago, Costa Rica",
-    "whatsapp": "+506 7281-6080",
+    "whatsapp": "+506 7189-6080",
     "delivery": "Delivery at: Turrialba · SJO Airport",
     "links": {
       "fleet": "Fleet",
@@ -210,7 +215,7 @@
     "name": "Full name",
     "namePlaceholder": "e.g. Ana García",
     "phone": "WhatsApp",
-    "phonePlaceholder": "7281-6080",
+    "phonePlaceholder": "7189-6080",
     "email": "Email (optional)",
     "emailPlaceholder": "you@email.com",
     "vehicle": "Vehicle",
@@ -276,6 +281,23 @@
     "relatedTitle": "Other vehicles you might like",
     "checkAvailability": "Check availability",
     "availabilityLimited": "Limited availability — check via WhatsApp"
+  },
+  "about": {
+    "label": "About us",
+    "title": "Our story",
+    "subtitle": "Get to know who we are and why we do what we do",
+    "originTitle": "How did Sloth Rent a Car start?",
+    "originParagraphs": [
+      "We started with the goal of providing a more personal, transparent, and close-knit service — where every client feels supported from the moment of booking through vehicle return.",
+      "Today we continue to grow with the same mission: helping our clients explore Costa Rica with freedom, comfort, and confidence."
+    ],
+    "slothTitle": "Why the name Sloth?",
+    "slothParagraphs": [
+      "The sloth is one of Costa Rica's most beloved symbols. It represents the connection with nature, tranquility, and the unique way of savoring every moment that defines our country.",
+      "At Sloth Rent a Car we believe that traveling isn't about rushing from one place to another — it's about exploring at your own pace, discovering incredible landscapes, and creating unforgettable experiences.",
+      "Our name reflects that philosophy: drive freely, enjoy the journey, and live Costa Rica authentically.",
+      "Relax, take the keys, and explore Costa Rica your way."
+    ]
   },
   "notFound": {
     "title": "Oops! This page doesn't exist",

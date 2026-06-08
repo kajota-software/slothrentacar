@@ -39,7 +39,7 @@ npm run start
 
 | Variable | Descripción | Default |
 |---|---|---|
-| `NEXT_PUBLIC_WHATSAPP_NUMBER` | Número de WhatsApp (sin +) | `50672816080` |
+| `NEXT_PUBLIC_WHATSAPP_NUMBER` | Número de WhatsApp (sin +) | `50671896080` |
 | `NEXT_PUBLIC_USD_CRC_RATE` | Tasa de cambio de referencia ₡/USD | `530` |
 | `NEXT_PUBLIC_SANTAFE_AVAILABLE` | Disponibilidad del Santa Fe | `true` |
 
