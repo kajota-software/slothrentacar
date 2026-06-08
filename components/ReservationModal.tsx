@@ -179,7 +179,21 @@ export default function ReservationModal({
     if (!open) {
       setStep(1);
       setErrors({});
+      return;
     }
+    // Lock body scroll — iOS-safe (position:fixed keeps page from scrolling under the modal)
+    const y = window.scrollY;
+    document.body.style.overflow = 'hidden';
+    document.body.style.position = 'fixed';
+    document.body.style.top = `-${y}px`;
+    document.body.style.width = '100%';
+    return () => {
+      document.body.style.overflow = '';
+      document.body.style.position = '';
+      document.body.style.top = '';
+      document.body.style.width = '';
+      window.scrollTo(0, y);
+    };
   }, [open]);
 
   const price = usePrice(booking, rateProp);
@@ -313,7 +327,7 @@ export default function ReservationModal({
                   </div>
 
                   {/* Dates */}
-                  <div className="grid grid-cols-2 gap-3">
+                  <div className="grid grid-cols-1 min-[480px]:grid-cols-2 gap-3">
                     <div>
                       <label className="block text-sm font-medium text-forest mb-1.5">{t('pickupDate')}</label>
                       <input
