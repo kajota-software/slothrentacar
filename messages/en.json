@@ -13,6 +13,7 @@
     "headline2": "Costa Rica",
     "headline3": "your way",
     "subtext": "Which vehicle starts your adventure?",
+    "noHiddenFees": "No hidden fees",
     "searchLabel": "When do you want to travel?",
     "dateStart": "Start date",
     "dateEnd": "End date",
@@ -241,7 +242,8 @@
     "depositRequired": "Required deposit (50%)",
     "disclaimer": "Estimated price. Final amount confirmed via WhatsApp and includes the refundable security deposit (${deposit} USD).",
     "required": "Required field",
-    "minDays": "Return must be at least 1 day after pickup"
+    "minDays": "Return must be at least 1 day after pickup",
+    "noHiddenFees": "No hidden fees"
   },
   "vehicle": {
     "back": "← Back to fleet",
@@ -278,6 +280,7 @@
     "childSeatPrice": "$10/day",
     "idealFor": "Ideal for...",
     "bookNow": "Book this vehicle",
+    "noHiddenFees": "No hidden fees",
     "relatedTitle": "Other vehicles you might like",
     "checkAvailability": "Check availability",
     "availabilityLimited": "Limited availability — check via WhatsApp"

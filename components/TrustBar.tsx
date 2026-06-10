@@ -31,7 +31,7 @@ export default function TrustBar() {
               transition={{ duration: 0.5, delay: i * 0.1 }}
               className="flex flex-col items-center text-center gap-3"
             >
-              <div className="text-forest w-14 h-14 rounded-2xl bg-forest/10 flex items-center justify-center">
+              <div className="text-white w-14 h-14 rounded-2xl bg-forest flex items-center justify-center">
                 {icons[i]}
               </div>
               <div>

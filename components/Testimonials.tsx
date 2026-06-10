@@ -84,8 +84,8 @@ export default function Testimonials() {
               <StarRating rating={review.rating} />
               <p className="mt-4 text-forest-dark text-sm leading-relaxed">&ldquo;{review.text}&rdquo;</p>
               <div className="mt-5 flex items-center gap-3">
-                <div className="w-9 h-9 rounded-full bg-forest/10 flex items-center justify-center flex-none">
-                  <span className="font-heading text-forest font-bold text-sm">{review.name.charAt(0)}</span>
+                <div className="w-9 h-9 rounded-full bg-forest flex items-center justify-center flex-none">
+                  <span className="font-heading text-white font-bold text-sm">{review.name.charAt(0)}</span>
                 </div>
                 <div>
                   <p className="text-sm font-semibold text-forest">{review.name}</p>

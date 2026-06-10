@@ -83,7 +83,7 @@ export default function Destinations() {
                   <span className="absolute top-5 right-5 font-heading text-white/10 text-6xl font-bold leading-none" aria-hidden="true">
                     {String(i + 1).padStart(2, '0')}
                   </span>
-                  <span className="inline-block bg-amber/20 border border-amber/30 text-amber text-xs font-medium px-3 py-1 rounded-full mb-3 w-fit">
+                  <span className="block text-amber text-xs font-medium mb-3">
                     {item.tag}
                   </span>
                   <h3 className="font-heading text-white text-xl font-bold mb-2">{item.name}</h3>

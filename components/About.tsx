@@ -51,8 +51,8 @@ export default function About() {
             transition={{ duration: 0.6 }}
             className="bg-cream rounded-3xl p-8 md:p-10"
           >
-            <div className="w-12 h-12 rounded-2xl bg-amber/20 flex items-center justify-center mb-6">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 text-amber" aria-hidden="true">
+            <div className="w-12 h-12 rounded-2xl bg-amber flex items-center justify-center mb-6">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 text-forest-dark" aria-hidden="true">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
                 <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
               </svg>
@@ -77,9 +77,7 @@ export default function About() {
             transition={{ duration: 0.6, delay: 0.15 }}
             className="bg-forest rounded-3xl p-8 md:p-10"
           >
-            <div className="w-12 h-12 rounded-2xl bg-white/10 flex items-center justify-center mb-6 text-2xl" aria-hidden="true">
-              🦥
-            </div>
+            <div className="text-3xl mb-6" aria-hidden="true">🦥</div>
             <h3 className="font-heading text-white text-2xl font-bold mb-5">
               {t('slothTitle')}
             </h3>

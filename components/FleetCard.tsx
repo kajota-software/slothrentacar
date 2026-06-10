@@ -46,10 +46,10 @@ export default function FleetCard({ vehicle, index = 0, currency = 'CRC', rate }
           {/* Badges */}
           <div className="absolute top-3 left-3 flex items-center gap-1.5 z-10">
             <span
-              className={`text-[11px] font-semibold px-2.5 py-1 rounded-full backdrop-blur-sm ${
+              className={`text-[11px] font-semibold px-2.5 py-1 rounded-full ${
                 vehicle.category === 'economy'
-                  ? 'bg-white/90 text-forest'
-                  : 'bg-forest/90 text-white'
+                  ? 'bg-white text-forest'
+                  : 'bg-forest text-white'
               }`}
             >
               {vehicle.category === 'economy' ? t('filterEconomy') : 'SUV'}
@@ -62,7 +62,7 @@ export default function FleetCard({ vehicle, index = 0, currency = 'CRC', rate }
           </div>
 
           {/* Year — bottom right of image */}
-          <span className="absolute bottom-3 right-3 z-10 text-[11px] font-medium text-white/80 bg-forest-dark/50 backdrop-blur-sm px-2 py-0.5 rounded-full">
+          <span className="absolute bottom-3 right-3 z-10 text-[11px] font-medium text-white bg-forest-dark px-2 py-0.5 rounded-full">
             {vehicle.year}
           </span>
         </div>

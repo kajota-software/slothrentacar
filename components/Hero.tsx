@@ -69,16 +69,6 @@ export default function Hero() {
           }}
           aria-hidden="true"
         />
-        <div
-          className="absolute top-1/4 right-0 w-96 h-96 rounded-full opacity-10 blur-3xl"
-          style={{ background: 'radial-gradient(circle, #D4A017, transparent)' }}
-          aria-hidden="true"
-        />
-        <div
-          className="absolute bottom-0 left-0 w-72 h-72 rounded-full opacity-10 blur-3xl"
-          style={{ background: 'radial-gradient(circle, #2d6a4f, transparent)' }}
-          aria-hidden="true"
-        />
 
         {/* Content */}
         <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-20 text-center">
@@ -116,13 +106,29 @@ export default function Hero() {
             {t('subtext')}
           </motion.p>
 
+          {/* No hidden fees badge */}
+          <motion.div
+            custom={0.45}
+            variants={fadeUp}
+            initial="hidden"
+            animate="visible"
+            className="mt-6 flex justify-center"
+          >
+            <div className="inline-flex items-center gap-2 text-amber">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5 flex-shrink-0" aria-hidden="true">
+                <path fillRule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clipRule="evenodd" />
+              </svg>
+              <span className="font-bold text-xl md:text-2xl tracking-tight">{t('noHiddenFees')}</span>
+            </div>
+          </motion.div>
+
           {/* Search form */}
           <motion.div
             custom={0.5}
             variants={fadeUp}
             initial="hidden"
             animate="visible"
-            className="mt-10"
+            className="mt-8"
           >
             {/* Card: solo inputs, sin botón */}
             <div

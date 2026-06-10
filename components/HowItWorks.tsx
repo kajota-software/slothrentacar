@@ -80,10 +80,6 @@ export default function HowItWorks() {
 
           {/* Steps */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 relative">
-            <div
-              className="hidden lg:block absolute top-12 left-[12.5%] right-[12.5%] h-px bg-gradient-to-r from-transparent via-white/20 to-transparent"
-              aria-hidden="true"
-            />
             {steps.map((step, i) => (
               <motion.div
                 key={i}
@@ -93,7 +89,7 @@ export default function HowItWorks() {
                 transition={{ duration: 0.6, delay: i * 0.12 }}
                 className="relative flex flex-col items-center text-center"
               >
-                <div className="relative z-10 w-24 h-24 rounded-full border-2 border-amber/30 bg-forest flex items-center justify-center mb-6">
+                <div className="relative z-10 w-24 h-24 rounded-full border-2 border-amber bg-forest flex items-center justify-center mb-6">
                   <span className="font-heading text-amber text-2xl font-bold">{step.number}</span>
                 </div>
                 <h3 className="font-heading text-white font-semibold text-lg mb-3">{step.title}</h3>

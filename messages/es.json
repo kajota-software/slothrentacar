@@ -13,6 +13,7 @@
     "headline2": "Costa Rica",
     "headline3": "a tu ritmo",
     "subtext": "¿Con qué vehículo empieza tu aventura?",
+    "noHiddenFees": "Sin tarifas ocultas",
     "searchLabel": "¿Cuándo quieres viajar?",
     "dateStart": "Fecha inicio",
     "dateEnd": "Fecha fin",
@@ -241,7 +242,8 @@
     "depositRequired": "Anticipo requerido (50%)",
     "disclaimer": "Precio estimado. El monto final se confirma por WhatsApp e incluye el depósito de garantía reembolsable (${deposit} USD).",
     "required": "Campo requerido",
-    "minDays": "La devolución debe ser al menos 1 día después de la entrega"
+    "minDays": "La devolución debe ser al menos 1 día después de la entrega",
+    "noHiddenFees": "Sin tarifas ocultas"
   },
   "vehicle": {
     "back": "← Volver a la flota",
@@ -278,6 +280,7 @@
     "childSeatPrice": "$10/día",
     "idealFor": "Ideal para...",
     "bookNow": "Reservar este vehículo",
+    "noHiddenFees": "Sin tarifas ocultas",
     "relatedTitle": "Otros vehículos que te pueden interesar",
     "checkAvailability": "Consultar disponibilidad",
     "availabilityLimited": "Disponibilidad limitada — consulta por WhatsApp"
