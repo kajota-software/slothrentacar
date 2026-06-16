@@ -35,7 +35,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         : `Rent the ${vehicle.name} ${vehicle.year} in Costa Rica. ${vehicle.passengers} passengers, ${vehicle.drive}. ₡${vehicle.pricePerDayCRC.toLocaleString()}/day.`,
     openGraph: {
       title: `${vehicle.name} ${vehicle.year} — Sloth Rent a Car`,
-      images: [`/images/${vehicle.slug}/exterior-1.jpg`],
+      images: [vehicle.image],
     },
   };
 }

@@ -6,6 +6,7 @@ export interface Luggage {
 export interface Vehicle {
   slug: string;
   name: string;
+  image: string;
   year: number;
   type: string;
   drive: string;
@@ -22,6 +23,7 @@ export const fleet: Vehicle[] = [
   {
     slug: 'toyota-agya-2021',
     name: 'Toyota Agya',
+    image: 'https://res.cloudinary.com/dv1klrgdi/image/upload/v1781591671/agya_yqphe3.webp',
     year: 2021,
     type: 'hatchback',
     drive: '2WD',
@@ -36,6 +38,7 @@ export const fleet: Vehicle[] = [
   {
     slug: 'suzuki-swift-2024',
     name: 'Suzuki Swift',
+    image: 'https://res.cloudinary.com/dv1klrgdi/image/upload/v1781591671/suzukiSwift_mgwut2.webp',
     year: 2024,
     type: 'sedan',
     drive: '2WD',
@@ -50,6 +53,7 @@ export const fleet: Vehicle[] = [
   {
     slug: 'hyundai-venue-2021',
     name: 'Hyundai Venue',
+    image: 'https://res.cloudinary.com/dv1klrgdi/image/upload/v1781591671/HyundaiVenue_qxqwmi.webp',
     year: 2021,
     type: 'SUV',
     drive: '4x2',
@@ -64,6 +68,7 @@ export const fleet: Vehicle[] = [
   {
     slug: 'suzuki-vitara-2024',
     name: 'Suzuki Vitara',
+    image: 'https://res.cloudinary.com/dv1klrgdi/image/upload/v1781591671/vitara_eu7leq.webp',
     year: 2024,
     type: 'SUV',
     drive: '4x4',
@@ -78,6 +83,7 @@ export const fleet: Vehicle[] = [
   {
     slug: 'toyota-rush-2023',
     name: 'Toyota Rush',
+    image: 'https://res.cloudinary.com/dv1klrgdi/image/upload/v1781591659/rush_shpx0p.webp',
     year: 2023,
     type: 'SUV',
     drive: '4x2',
@@ -92,6 +98,7 @@ export const fleet: Vehicle[] = [
   {
     slug: 'hyundai-santa-fe-2018',
     name: 'Hyundai Santa Fe',
+    image: 'https://res.cloudinary.com/dv1klrgdi/image/upload/v1781591658/SantaFe_vsm2ea.webp',
     year: 2018,
     type: 'SUV',
     drive: '4x4',

@@ -38,8 +38,8 @@ export default function FleetCard({ vehicle, index = 0, currency = 'CRC', rate }
         className="group flex flex-col rounded-2xl overflow-hidden bg-white shadow-[0_2px_16px_rgba(27,67,50,0.07)] hover:shadow-[0_10px_36px_rgba(27,67,50,0.13)] transition-shadow duration-300"
       >
         {/* Image */}
-        <div className="relative h-52 overflow-hidden bg-sand flex-none">
-          <VehicleImage slug={vehicle.slug} name={vehicle.name} />
+        <div className="relative h-52 overflow-hidden bg-white flex-none">
+          <VehicleImage image={vehicle.image} name={vehicle.name} />
           {/* Gradient pour depth */}
           <div className="absolute inset-0 bg-gradient-to-t from-forest-dark/40 via-transparent to-transparent pointer-events-none" />
 

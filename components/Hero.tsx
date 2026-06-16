@@ -51,7 +51,7 @@ export default function Hero() {
       >
         {/* Background image */}
         <Image
-          src="https://images.unsplash.com/photo-1627609243025-22613935dfa1?auto=format&fit=crop&w=1920&q=80"
+          src="https://res.cloudinary.com/dv1klrgdi/image/upload/v1781592436/paisajeSloth_h4skdi.avif"
           alt=""
           fill
           priority
