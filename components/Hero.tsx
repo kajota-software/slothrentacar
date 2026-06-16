@@ -51,7 +51,7 @@ export default function Hero() {
       >
         {/* Background image */}
         <Image
-          src="https://res.cloudinary.com/dv1klrgdi/image/upload/v1781592436/paisajeSloth_h4skdi.avif"
+          src="https://res.cloudinary.com/dv1klrgdi/image/upload/f_auto,q_auto/v1781592436/paisajeSloth_h4skdi.avif"
           alt=""
           fill
           priority
@@ -88,7 +88,7 @@ export default function Hero() {
               variants={fadeUp}
               initial="hidden"
               animate="visible"
-              className="block text-white/60"
+              className="block text-white/80"
               style={{ fontSize: '0.65em' }}
             >
               {t('headline3')}
@@ -138,10 +138,11 @@ export default function Hero() {
               {/* Row 1: Fecha inicio + Fecha fin */}
               <div className="grid grid-cols-2 divide-x divide-white/10">
                 <div className="px-5 py-4">
-                  <label className="block text-amber text-[10px] font-semibold uppercase tracking-widest mb-1.5">
+                  <label htmlFor="hero-date-start" className="block text-amber text-[10px] font-semibold uppercase tracking-widest mb-1.5">
                     {t('dateStart')}
                   </label>
                   <input
+                    id="hero-date-start"
                     type="date"
                     min={today}
                     value={pickupDate}
@@ -153,10 +154,11 @@ export default function Hero() {
                   />
                 </div>
                 <div className="px-5 py-4">
-                  <label className="block text-amber text-[10px] font-semibold uppercase tracking-widest mb-1.5">
+                  <label htmlFor="hero-date-end" className="block text-amber text-[10px] font-semibold uppercase tracking-widest mb-1.5">
                     {t('dateEnd')}
                   </label>
                   <input
+                    id="hero-date-end"
                     type="date"
                     min={minReturn}
                     value={returnDate}
@@ -168,10 +170,11 @@ export default function Hero() {
 
               {/* Row 2: Vehículo — ancho completo */}
               <div className="px-5 py-4 border-t border-white/10">
-                <label className="block text-amber text-[10px] font-semibold uppercase tracking-widest mb-1.5">
+                <label htmlFor="hero-vehicle" className="block text-amber text-[10px] font-semibold uppercase tracking-widest mb-1.5">
                   {t('vehicleLabel')}
                 </label>
                 <select
+                  id="hero-vehicle"
                   value={vehicleSlug}
                   onChange={(e) => setVehicleSlug(e.target.value)}
                   className="w-full bg-transparent text-white text-sm focus:outline-none [color-scheme:dark]"
@@ -209,7 +212,7 @@ export default function Hero() {
                 e.preventDefault();
                 document.getElementById('fleet')?.scrollIntoView({ behavior: 'smooth' });
               }}
-              className="text-white/50 hover:text-white/80 text-sm transition-colors duration-200 inline-flex items-center gap-1"
+              className="text-white/75 hover:text-white text-sm transition-colors duration-200 inline-flex items-center gap-1"
             >
               {t('cta')} ↓
             </a>

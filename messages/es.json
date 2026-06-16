@@ -216,6 +216,7 @@
     "name": "Nombre completo",
     "namePlaceholder": "Ej. Ana García",
     "phone": "WhatsApp",
+    "countryCode": "Código de país",
     "phonePlaceholder": "7189-6080",
     "email": "Email (opcional)",
     "emailPlaceholder": "tu@email.com",

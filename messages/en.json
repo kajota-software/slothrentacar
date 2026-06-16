@@ -216,6 +216,7 @@
     "name": "Full name",
     "namePlaceholder": "e.g. Ana García",
     "phone": "WhatsApp",
+    "countryCode": "Country code",
     "phonePlaceholder": "7189-6080",
     "email": "Email (optional)",
     "emailPlaceholder": "you@email.com",

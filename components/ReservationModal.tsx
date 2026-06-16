@@ -308,8 +308,9 @@ export default function ReservationModal({
                 >
                   {/* Vehicle */}
                   <div>
-                    <label className="block text-sm font-medium text-forest mb-1.5">{t('vehicle')}</label>
+                    <label htmlFor="modal-vehicle" className="block text-sm font-medium text-forest mb-1.5">{t('vehicle')}</label>
                     <select
+                      id="modal-vehicle"
                       value={booking.vehicleSlug}
                       onChange={(e) => setBooking({ ...booking, vehicleSlug: e.target.value })}
                       className={`w-full border rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-forest/30 bg-white transition-colors ${
@@ -329,8 +330,9 @@ export default function ReservationModal({
                   {/* Dates */}
                   <div className="grid grid-cols-1 min-[480px]:grid-cols-2 gap-3">
                     <div>
-                      <label className="block text-sm font-medium text-forest mb-1.5">{t('pickupDate')}</label>
+                      <label htmlFor="modal-pickup-date" className="block text-sm font-medium text-forest mb-1.5">{t('pickupDate')}</label>
                       <input
+                        id="modal-pickup-date"
                         type="date"
                         min={today}
                         value={booking.pickupDate}
@@ -342,8 +344,9 @@ export default function ReservationModal({
                       {errors.pickupDate && <p className="text-red-500 text-xs mt-1">{errors.pickupDate}</p>}
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-forest mb-1.5">{t('returnDate')}</label>
+                      <label htmlFor="modal-return-date" className="block text-sm font-medium text-forest mb-1.5">{t('returnDate')}</label>
                       <input
+                        id="modal-return-date"
                         type="date"
                         min={minReturn}
                         value={booking.returnDate}
@@ -358,8 +361,9 @@ export default function ReservationModal({
 
                   {/* Location */}
                   <div>
-                    <label className="block text-sm font-medium text-forest mb-1.5">{t('pickupLocation')}</label>
+                    <label htmlFor="modal-location" className="block text-sm font-medium text-forest mb-1.5">{t('pickupLocation')}</label>
                     <select
+                      id="modal-location"
                       value={booking.pickupLocation}
                       onChange={(e) => setBooking({ ...booking, pickupLocation: e.target.value })}
                       className="w-full border border-sand-dark rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-forest/30 bg-white"
@@ -374,8 +378,9 @@ export default function ReservationModal({
                   <div>
                     <p className="text-sm font-medium text-forest mb-2">{t('extras')}</p>
                     <div className="space-y-2">
-                      <label className="flex items-center gap-3 cursor-pointer group">
+                      <label htmlFor="modal-extra-zd" className="flex items-center gap-3 cursor-pointer group">
                         <input
+                          id="modal-extra-zd"
                           type="checkbox"
                           checked={booking.extraZeroDeductible}
                           onChange={(e) => setBooking({ ...booking, extraZeroDeductible: e.target.checked })}
@@ -385,8 +390,9 @@ export default function ReservationModal({
                           {t('extraZeroDeductible')}
                         </span>
                       </label>
-                      <label className="flex items-center gap-3 cursor-pointer group">
+                      <label htmlFor="modal-extra-cs" className="flex items-center gap-3 cursor-pointer group">
                         <input
+                          id="modal-extra-cs"
                           type="checkbox"
                           checked={booking.extraChildSeat}
                           onChange={(e) => setBooking({ ...booking, extraChildSeat: e.target.checked })}
@@ -401,8 +407,9 @@ export default function ReservationModal({
 
                   {/* Notes */}
                   <div>
-                    <label className="block text-sm font-medium text-forest mb-1.5">{t('notes')}</label>
+                    <label htmlFor="modal-notes" className="block text-sm font-medium text-forest mb-1.5">{t('notes')}</label>
                     <textarea
+                      id="modal-notes"
                       placeholder={t('notesPlaceholder')}
                       value={booking.notes}
                       onChange={(e) => setBooking({ ...booking, notes: e.target.value })}
@@ -482,8 +489,9 @@ export default function ReservationModal({
 
                   {/* Name */}
                   <div>
-                    <label className="block text-sm font-medium text-forest mb-1.5">{t('name')}</label>
+                    <label htmlFor="modal-name" className="block text-sm font-medium text-forest mb-1.5">{t('name')}</label>
                     <input
+                      id="modal-name"
                       type="text"
                       placeholder={t('namePlaceholder')}
                       value={contact.name}
@@ -497,9 +505,10 @@ export default function ReservationModal({
 
                   {/* Phone */}
                   <div>
-                    <label className="block text-sm font-medium text-forest mb-1.5">{t('phone')}</label>
+                    <label htmlFor="modal-phone" className="block text-sm font-medium text-forest mb-1.5">{t('phone')}</label>
                     <div className="flex gap-2">
                       <select
+                        aria-label={t('countryCode')}
                         value={contact.countryCode}
                         onChange={(e) => setContact({ ...contact, countryCode: e.target.value })}
                         className="border border-sand-dark rounded-xl px-3 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-forest/30 bg-white"
@@ -509,6 +518,7 @@ export default function ReservationModal({
                         ))}
                       </select>
                       <input
+                        id="modal-phone"
                         type="tel"
                         placeholder={t('phonePlaceholder')}
                         value={contact.phone}
@@ -523,8 +533,9 @@ export default function ReservationModal({
 
                   {/* Email */}
                   <div>
-                    <label className="block text-sm font-medium text-forest mb-1.5">{t('email')}</label>
+                    <label htmlFor="modal-email" className="block text-sm font-medium text-forest mb-1.5">{t('email')}</label>
                     <input
+                      id="modal-email"
                       type="email"
                       placeholder={t('emailPlaceholder')}
                       value={contact.email}

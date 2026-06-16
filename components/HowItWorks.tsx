@@ -32,7 +32,7 @@ export default function HowItWorks() {
           aria-hidden="true"
         >
           <Image
-            src="https://res.cloudinary.com/dv1klrgdi/image/upload/v1781592436/perezosa_exiygb.avif"
+            src="https://res.cloudinary.com/dv1klrgdi/image/upload/f_auto,q_auto/v1781592436/perezosa_exiygb.avif"
             alt=""
             fill
             sizes="100vw"

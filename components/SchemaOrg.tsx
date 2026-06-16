@@ -28,7 +28,8 @@ export default function SchemaOrg() {
       closes: '20:00',
     },
     sameAs: [
-      // TODO: agregar URLs reales de redes sociales cuando el cliente las provea
+      'https://www.instagram.com/slothrentacar?igsh=aWd0YXdrdmV1Yzl6',
+      'https://www.facebook.com/share/1KZYGLBHLb/',
     ],
     priceRange: '₡₡',
     currenciesAccepted: 'CRC, USD',

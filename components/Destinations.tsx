@@ -57,14 +57,16 @@ export default function Destinations() {
           {/* Cards — 3 cols, 2 rows */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {items.map((item, i) => (
-              <motion.div
+              <motion.button
                 key={i}
+                type="button"
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: (i % 3) * 0.1 }}
-                className="group relative rounded-3xl overflow-hidden cursor-pointer"
+                className="group relative rounded-3xl overflow-hidden cursor-pointer text-left"
                 onClick={() => setModalOpen(true)}
+                aria-label={`${t('cta')}: ${item.name}`}
               >
                 {/* Background */}
                 <div className={`absolute inset-0 bg-gradient-to-br ${destinationGradients[i] ?? destinationGradients[0]} transition-all duration-500 group-hover:scale-105`} />
@@ -87,13 +89,13 @@ export default function Destinations() {
                     {item.tag}
                   </span>
                   <h3 className="font-heading text-white text-xl font-bold mb-2">{item.name}</h3>
-                  <p className="text-white/70 text-sm leading-relaxed">{item.desc}</p>
+                  <p className="text-white/85 text-sm leading-relaxed">{item.desc}</p>
                   <div className="mt-3 flex items-center gap-1.5 text-amber text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                     {t('cta')}
                     <span aria-hidden="true">→</span>
                   </div>
                 </div>
-              </motion.div>
+              </motion.button>
             ))}
           </div>
         </div>

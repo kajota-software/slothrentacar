@@ -83,7 +83,7 @@ export default function About() {
             </h3>
             <div className="space-y-4">
               {slothParagraphs.map((p, i) => (
-                <p key={i} className="text-white/70 leading-relaxed">
+                <p key={i} className="text-white/85 leading-relaxed">
                   {p}
                 </p>
               ))}

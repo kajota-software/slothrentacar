@@ -26,9 +26,11 @@ function AccordionItem({
       className="border-b border-sand-dark last:border-0"
     >
       <button
+        id={`faq-trigger-${index}`}
         onClick={onToggle}
         className="w-full flex items-center justify-between py-5 text-left gap-4 group"
         aria-expanded={isOpen}
+        aria-controls={`faq-panel-${index}`}
       >
         <span className="font-heading text-forest font-semibold text-base md:text-lg group-hover:text-forest-light transition-colors">
           {question}
@@ -54,6 +56,9 @@ function AccordionItem({
         {isOpen && (
           <motion.div
             key="content"
+            id={`faq-panel-${index}`}
+            role="region"
+            aria-labelledby={`faq-trigger-${index}`}
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
