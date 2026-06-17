@@ -25,11 +25,6 @@ export const metadata: Metadata = {
   description:
     'Alquila tu vehículo ideal en Costa Rica. Flota moderna, seguro incluido, entrega en Turrialba y Aeropuerto Juan Santamaría (SJO). Reserva por WhatsApp.',
   metadataBase: new URL('https://slothrentacar.com'),
-  icons: {
-    icon: '/images/LOGOSLOTH.png',
-    shortcut: '/images/LOGOSLOTH.png',
-    apple: '/images/LOGOSLOTH.png',
-  },
   openGraph: {
     siteName: 'Sloth Rent a Car',
     locale: 'es_CR',
