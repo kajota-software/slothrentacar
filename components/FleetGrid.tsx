@@ -51,7 +51,7 @@ export default function FleetGrid() {
             viewport={{ once: true }}
             className="text-amber text-sm font-medium uppercase tracking-widest mb-3"
           >
-            {visibleFleet.length} vehículos
+            {t('vehiclesCount', { n: visibleFleet.length })}
           </motion.p>
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
@@ -112,7 +112,7 @@ export default function FleetGrid() {
                     : 'text-forest-muted hover:text-forest'
                 }`}
               >
-                ₡ Colones
+                {t('currencyCRC')}
               </button>
               <button
                 onClick={() => setCurrency('USD')}
@@ -122,7 +122,7 @@ export default function FleetGrid() {
                     : 'text-forest-muted hover:text-forest'
                 }`}
               >
-                $ Dólares
+                {t('currencyUSD')}
               </button>
             </div>
           </motion.div>
@@ -130,7 +130,7 @@ export default function FleetGrid() {
 
         {/* Carousel — overflow-y:hidden prevents vertical capture on touch */}
         {filtered.length === 0 ? (
-          <p className="text-center text-forest-muted py-12">No hay vehículos con este filtro.</p>
+          <p className="text-center text-forest-muted py-12">{t('noResults')}</p>
         ) : (
           <div
             className="flex items-start gap-5 overflow-x-auto overflow-y-hidden pb-4 -mx-4 px-4 sm:-mx-6 sm:px-6 scroll-hide"

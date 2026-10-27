@@ -111,7 +111,7 @@ export default function FleetCard({ vehicle, index = 0, currency = 'CRC', rate }
               {isLimited ? t('checkAvailability') : t('book')}
             </button>
             <Link
-              href={`/vehicles/${vehicle.slug}` as any}
+              href={`/vehicles/${vehicle.slug}`}
               className="px-4 py-2.5 rounded-xl bg-cream hover:bg-sand text-forest text-xs font-medium transition-all duration-200 flex items-center whitespace-nowrap"
             >
               {t('viewDetail')}

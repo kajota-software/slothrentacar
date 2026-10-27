@@ -7,6 +7,7 @@ import { isSantaFeAvailable } from '@/lib/utils';
 import VehicleGallery from '@/components/VehicleGallery';
 import FleetCard from '@/components/FleetCard';
 import VehicleBooking from '@/components/VehicleBooking';
+import InfoTip from '@/components/InfoTip';
 
 interface Props {
   params: Promise<{ locale: string; slug: string }>;
@@ -43,6 +44,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function VehiclePage({ params }: Props) {
   const { locale, slug } = await params;
   const t = await getTranslations({ locale, namespace: 'vehicle' });
+  const tTips = await getTranslations({ locale, namespace: 'infoTips' });
 
   const vehicle = getVehicleBySlug(slug);
   if (!vehicle) notFound();
@@ -201,7 +203,10 @@ export default async function VehiclePage({ params }: Props) {
                     clipRule="evenodd"
                   />
                 </svg>
-                <span className="text-forest-dark text-sm">{t('deductible')}</span>
+                <span className="text-forest-dark text-sm">
+                  {t('deductible')}{' '}
+                  <InfoTip text={tTips('deductible')} className="ml-0.5 -mt-0.5" />
+                </span>
               </li>
             </ul>
           </div>
@@ -213,8 +218,11 @@ export default async function VehiclePage({ params }: Props) {
             <div className="space-y-4">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="font-semibold text-white">{t('zeroDeductible')}</p>
-                  <p className="text-white/60 text-sm mt-0.5">Elimina el deducible de $800</p>
+                  <p className="font-semibold text-white flex items-center gap-2">
+                    {t('zeroDeductible')}
+                    <InfoTip text={tTips('deductible')} tone="dark" />
+                  </p>
+                  <p className="text-white/60 text-sm mt-0.5">{t('zeroDeductibleDesc')}</p>
                 </div>
                 <span className="bg-amber text-forest-dark font-bold text-sm px-3 py-1.5 rounded-xl">
                   {t('zeroDeductiblePrice')}
@@ -223,7 +231,7 @@ export default async function VehiclePage({ params }: Props) {
               <div className="border-t border-white/10 pt-4 flex items-center justify-between">
                 <div>
                   <p className="font-semibold text-white">{t('childSeat')}</p>
-                  <p className="text-white/60 text-sm mt-0.5">Silla homologada para niños</p>
+                  <p className="text-white/60 text-sm mt-0.5">{t('childSeatDesc')}</p>
                 </div>
                 <span className="bg-amber text-forest-dark font-bold text-sm px-3 py-1.5 rounded-xl">
                   {t('childSeatPrice')}

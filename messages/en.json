@@ -5,7 +5,8 @@
     "destinations": "Destinations",
     "faq": "FAQ",
     "book": "Book now",
-    "langSwitch": "ES"
+    "langSwitch": "ES",
+    "transport": "Transfers"
   },
   "hero": {
     "tagline": "Explore Costa Rica at your own pace",
@@ -25,10 +26,22 @@
   "trust": {
     "title": "Why choose us?",
     "items": [
-      { "title": "Insurance included", "desc": "CDW, personal accident, third-party & theft in every booking" },
-      { "title": "Book in minutes", "desc": "Quote by WhatsApp, no complicated forms" },
-      { "title": "24-hour assistance", "desc": "We support you throughout your Costa Rican adventure" },
-      { "title": "Airport delivery", "desc": "Service at Juan Santamaría (SJO) and Turrialba" }
+      {
+        "title": "Insurance included",
+        "desc": "CDW, personal accident, third-party & theft in every booking"
+      },
+      {
+        "title": "Book in minutes",
+        "desc": "Quote by WhatsApp, no complicated forms"
+      },
+      {
+        "title": "24-hour assistance",
+        "desc": "We support you throughout your Costa Rican adventure"
+      },
+      {
+        "title": "Airport delivery",
+        "desc": "Service at Juan Santamaría (SJO) and Turrialba"
+      }
     ]
   },
   "fleet": {
@@ -54,7 +67,11 @@
     "availabilityLimited": "Check availability",
     "rateRef": "Estimated prices in USD. Reference exchange rate.",
     "viewCarousel": "Carousel",
-    "viewGrid": "Grid"
+    "viewGrid": "Grid",
+    "vehiclesCount": "{n} vehicles",
+    "noResults": "No vehicles match this filter.",
+    "currencyCRC": "₡ Colones",
+    "currencyUSD": "$ Dollars"
   },
   "howItWorks": {
     "title": "How it works",
@@ -187,9 +204,11 @@
       },
       {
         "q": "What are the age and documentation requirements?",
-        "a": "You must be at least 25 years old, hold a valid driver's license recognized in Costa Rica, have a passport or national ID, and a credit card for the security deposit."
+        "a": "To rent a car, you'll need:",
+        "key": "requirements"
       }
-    ]
+    ],
+    "label": "Information"
   },
   "footer": {
     "tagline": "Explore Costa Rica at your own pace",
@@ -244,7 +263,28 @@
     "disclaimer": "Estimated price. Final amount confirmed via WhatsApp and includes the refundable security deposit (${deposit} USD).",
     "required": "Required field",
     "minDays": "Return must be at least 1 day after pickup",
-    "noHiddenFees": "No hidden fees"
+    "noHiddenFees": "No hidden fees",
+    "airportPickup": "Airport pickup: Sloth picks me up at the airport and I drive off from Turrialba (+⁠{price})",
+    "flightNumber": "Flight number",
+    "flightNumberPlaceholder": "e.g. AA1234",
+    "flightArrival": "Flight arrival date and time",
+    "returnTransfer": "Return transfer: I drop off the car and Sloth takes me to the airport (+⁠{price})",
+    "returnFlightDeparture": "Your flight's departure date and time",
+    "returnFlightDepartureHint": "It can be a different day from when you return the car.",
+    "returnFlightBeforeReturn": "Your departure flight can't be before you return the car",
+    "transfers": "Airport transfers",
+    "locationTurrialbaArea": "Turrialba surroundings (delivery cost quoted separately)",
+    "deliveryPlace": "Where should we deliver the car?",
+    "deliveryPlacePlaceholder": "Place, hotel or address",
+    "tooSoon": "We need at least 7 hours' notice to get everything ready. If it's urgent, message us on WhatsApp.",
+    "tooSoonCta": "Message us on WhatsApp",
+    "lineAirportPickup": "+ Airport pickup",
+    "lineReturnTransfer": "+ Return transfer to the airport",
+    "lineDelivery": "+ Delivery to {place}",
+    "toQuote": "quoted separately",
+    "requirementsTitle": "Rental requirements",
+    "requirementsConfirm": "I confirm I meet the requirements",
+    "requirementsError": "Please confirm you meet the requirements to continue"
   },
   "vehicle": {
     "back": "← Back to fleet",
@@ -284,7 +324,9 @@
     "noHiddenFees": "No hidden fees",
     "relatedTitle": "Other vehicles you might like",
     "checkAvailability": "Check availability",
-    "availabilityLimited": "Limited availability — check via WhatsApp"
+    "availabilityLimited": "Limited availability — check via WhatsApp",
+    "zeroDeductibleDesc": "Removes the $800 deductible",
+    "childSeatDesc": "Certified child safety seat"
   },
   "about": {
     "label": "About us",
@@ -307,5 +349,181 @@
     "title": "Oops! This page doesn't exist",
     "subtitle": "Looks like the sloth got lost in the jungle.",
     "cta": "Back to home"
+  },
+  "infoTips": {
+    "label": "More info",
+    "deductible": "The standard deductible is $800 USD in case of an incident. To remove it, you can add zero-deductible coverage for $15 USD a day when you book.",
+    "flightDelay": "We track your flight. If a delay means we wait longer, there's a $10 USD charge for each hour of waiting.",
+    "notice": "We need at least 7 hours to get your ride ready.",
+    "turrialbaArea": "The delivery cost depends on the location. We'll confirm it with you on WhatsApp.",
+    "otherDestination": "The price depends on the distance. We'll confirm it with you on WhatsApp before the trip."
+  },
+  "airportSection": {
+    "label": "Airport transfers",
+    "title": "We pick you up at the airport",
+    "text": "Land stress-free. We'll be waiting for you at the airport and take you to your destination, at any hour, with clear pricing from the start.",
+    "points": [
+      "We'll be waiting at the airport, 24 hours a day",
+      "Clear pricing before you travel, from {price}",
+      "Renting a car? Pick it up ready to go in Turrialba"
+    ],
+    "cta": "See airport transfers"
+  },
+  "transport": {
+    "meta": {
+      "title": "Airport Transfers in Costa Rica | Sloth Rent a Car",
+      "description": "Skip the taxis and buses when you land. We'll be waiting at the airport and take you to your destination, any time of day. Book on WhatsApp."
+    },
+    "places": {
+      "Aeropuerto": "Airport",
+      "Turrialba": "Turrialba",
+      "Puerto Viejo": "Puerto Viejo"
+    },
+    "hero": {
+      "label": "Airport transfers",
+      "title": "Land and relax. We'll take it from here.",
+      "subtitle": "Forget about taxis, buses and haggling when you get off the plane. We'll be waiting at the airport and take you to your destination, any time of day.",
+      "cta": "Book your transfer",
+      "meta": "From {price} per trip · Up to {max} passengers · 24/7"
+    },
+    "how": {
+      "label": "Step by step",
+      "title": "How it works",
+      "subtitle": "From the plane to your destination, hassle-free",
+      "steps": [
+        {
+          "title": "Book with your flight details",
+          "desc": "Fill out the form with your flight and destination, at least 7 hours ahead."
+        },
+        {
+          "title": "We confirm on WhatsApp",
+          "desc": "We'll message you to confirm the price and your trip details."
+        },
+        {
+          "title": "We wait for you at the airport",
+          "desc": "We track your flight and meet you on the way out. No hunting for a taxi, no haggling."
+        },
+        {
+          "title": "We take you to your destination",
+          "desc": "Ride comfortably, straight to where you're going."
+        }
+      ]
+    },
+    "modes": {
+      "label": "Your choice",
+      "title": "Two ways to use the service",
+      "transportOnly": {
+        "title": "Transfer only",
+        "desc": "We pick you up at the airport and take you to your destination. We'll also take you back to the airport when you head home."
+      },
+      "withRental": {
+        "title": "Transfer + car rental",
+        "desc": "We pick you up at the airport, bring you to Turrialba and you drive off in your car from there. When you're done, return the car and we'll take you back to the airport ({price} per transfer).",
+        "cta": "See the fleet"
+      },
+      "bookCta": "Book your transfer"
+    },
+    "routes": {
+      "label": "Routes & prices",
+      "title": "Where are you headed?",
+      "subtitle": "Prices are per trip, not per person.",
+      "perTrip": "per trip",
+      "oneWay": "One way",
+      "book": "Book this route",
+      "otherTitle": "Going somewhere else?",
+      "otherDesc": "Tell us where you're going and we'll send you a quote.",
+      "otherPrice": "Quote on request",
+      "otherCta": "Get a quote",
+      "otherOption": "Other destination (quote on request)"
+    },
+    "details": {
+      "label": "Good to know",
+      "title": "Service details",
+      "items": {
+        "perTrip": "Price per trip, not per person",
+        "maxPassengers": "Up to {n} passengers",
+        "luggage": "Luggage: up to {large} large and {medium} medium suitcases",
+        "sameRate": "Same price 24 hours a day",
+        "delay": "If your flight is delayed: ${fee} for each hour of waiting",
+        "notice": "Book at least {hours} hours in advance"
+      }
+    },
+    "faq": {
+      "label": "Information",
+      "title": "Frequently asked questions",
+      "subtitle": "What people ask us most about transfers",
+      "items": [
+        {
+          "q": "Is the price per person?",
+          "a": "No, it's per trip, for up to 4 passengers."
+        },
+        {
+          "q": "Do you charge more at night or early morning?",
+          "a": "No, the price is the same 24 hours a day."
+        },
+        {
+          "q": "What if my flight is delayed?",
+          "a": "We track your flight details. If a delay means we wait longer, there's a $10 charge for each hour of waiting."
+        },
+        {
+          "q": "How much luggage can I bring?",
+          "a": "Up to 2 large and 2 medium suitcases."
+        },
+        {
+          "q": "How far in advance should I book?",
+          "a": "At least 7 hours ahead, so we can have everything ready."
+        },
+        {
+          "q": "Do you go to other destinations?",
+          "a": "Yes. Choose \"Other destination\" in the form and we'll send you a quote on WhatsApp."
+        },
+        {
+          "q": "Can I combine it with a car rental?",
+          "a": "Yes. We bring you to Turrialba and you drive off in your car. Just check the option when you book the vehicle."
+        }
+      ]
+    },
+    "form": {
+      "label": "Booking",
+      "title": "Book your transfer",
+      "subtitle": "Fill in your details and we'll confirm on WhatsApp.",
+      "name": "Full name",
+      "namePlaceholder": "e.g. Ana García",
+      "phone": "WhatsApp",
+      "countryCode": "Country code",
+      "phonePlaceholder": "7189-6080",
+      "route": "Route",
+      "selectRoute": "Select a route",
+      "from": "Pickup location",
+      "fromPlaceholder": "e.g. hotel, town or address",
+      "to": "Destination",
+      "toPlaceholder": "e.g. hotel, town or address",
+      "dateFromAirport": "Flight arrival date and time",
+      "dateToAirport": "Pickup date and time",
+      "dateOther": "Trip date and time",
+      "flight": "Flight number",
+      "flightOptional": "Flight number (optional)",
+      "flightPlaceholder": "e.g. AA1234",
+      "passengers": "Passengers",
+      "largeBags": "Large suitcases",
+      "mediumBags": "Medium suitcases",
+      "max": "max. {n}",
+      "notes": "Notes (optional)",
+      "notesPlaceholder": "e.g. traveling with a baby, exact address...",
+      "required": "Required field",
+      "tooSoon": "We need at least 7 hours' notice to get everything ready. If it's urgent, message us on WhatsApp.",
+      "tooSoonCta": "Message us on WhatsApp",
+      "submit": "Send via WhatsApp",
+      "summaryTitle": "Price summary",
+      "perTrip": "{route} · per trip",
+      "total": "Total",
+      "quote": "Price: quoted on WhatsApp",
+      "note": "*If your flight is delayed, there's a $10 charge for each hour of waiting. The final price is confirmed on WhatsApp."
+    },
+    "closing": {
+      "title": "Your trip starts relaxed the moment you land.",
+      "text": "Book in a couple of minutes and we'll confirm on WhatsApp.",
+      "cta": "Book your transfer"
+    }
   }
 }

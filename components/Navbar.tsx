@@ -27,6 +27,7 @@ export default function Navbar() {
   const navLinks = [
     { href: '/#fleet', label: t('fleet') },
     { href: '/#how-it-works', label: t('howItWorks') },
+    { href: '/transporte', label: t('transport'), page: true },
     { href: '/#destinations', label: t('destinations') },
     { href: '/#faq', label: t('faq') },
   ];
@@ -55,16 +56,26 @@ export default function Navbar() {
             </Link>
 
             {/* Desktop Nav */}
-            <nav className="hidden md:flex items-center gap-8">
-              {navLinks.map((link) => (
-                <a
-                  key={link.href}
-                  href={link.href}
-                  className="text-white/80 hover:text-amber text-sm font-medium transition-colors duration-200"
-                >
-                  {link.label}
-                </a>
-              ))}
+            <nav className="hidden md:flex items-center gap-5 lg:gap-8">
+              {navLinks.map((link) =>
+                link.page ? (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    className="text-white/80 hover:text-amber text-sm font-medium transition-colors duration-200"
+                  >
+                    {link.label}
+                  </Link>
+                ) : (
+                  <a
+                    key={link.href}
+                    href={link.href}
+                    className="text-white/80 hover:text-amber text-sm font-medium transition-colors duration-200"
+                  >
+                    {link.label}
+                  </a>
+                )
+              )}
             </nav>
 
             {/* Desktop actions */}
@@ -99,16 +110,27 @@ export default function Navbar() {
         {/* Mobile menu */}
         {mobileOpen && (
           <div className="md:hidden bg-forest-dark border-t border-white/10 px-4 pb-6 pt-2">
-            {navLinks.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                onClick={() => setMobileOpen(false)}
-                className="block text-white/80 hover:text-amber py-3 text-sm font-medium border-b border-white/10 last:border-0"
-              >
-                {link.label}
-              </a>
-            ))}
+            {navLinks.map((link) =>
+              link.page ? (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  onClick={() => setMobileOpen(false)}
+                  className="block text-white/80 hover:text-amber py-3 text-sm font-medium border-b border-white/10 last:border-0"
+                >
+                  {link.label}
+                </Link>
+              ) : (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  onClick={() => setMobileOpen(false)}
+                  className="block text-white/80 hover:text-amber py-3 text-sm font-medium border-b border-white/10 last:border-0"
+                >
+                  {link.label}
+                </a>
+              )
+            )}
             <button
               onClick={() => { setMobileOpen(false); setModalOpen(true); }}
               className="mt-4 w-full bg-amber hover:bg-amber-dark text-forest-dark font-semibold text-sm px-5 py-3 rounded-full transition-all duration-200"

@@ -1,37 +1,53 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
+import { usePathname } from 'next/navigation';
 import ReservationModal from './ReservationModal';
 
 export default function WhatsAppButton() {
   const [visible, setVisible] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const heroRef = useRef<Element | null>(null);
+  // En la página de transporte el botón lleva al formulario de transporte, no al de renta
+  const isTransportPage = usePathname().endsWith('/transporte');
 
   useEffect(() => {
     heroRef.current = document.getElementById('hero');
+    // En la página de transporte también se oculta mientras el formulario está en pantalla (no tapa campos)
+    const form = isTransportPage ? document.getElementById('reservar') : null;
 
-    if (!heroRef.current) {
+    if (!heroRef.current && !form) {
       setVisible(true);
       return;
     }
 
+    let heroVisible = !!heroRef.current;
+    let formVisible = false;
     const observer = new IntersectionObserver(
-      ([entry]) => {
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.target === heroRef.current) heroVisible = entry.isIntersecting;
+          else formVisible = entry.isIntersecting;
+        }
         // Show button when hero is no longer fully in view
-        setVisible(!entry.isIntersecting);
+        setVisible(!heroVisible && !formVisible);
       },
       { threshold: 0.1 }
     );
 
-    observer.observe(heroRef.current);
+    if (heroRef.current) observer.observe(heroRef.current);
+    if (form) observer.observe(form);
     return () => observer.disconnect();
-  }, []);
+  }, [isTransportPage]);
 
   return (
     <>
       <button
-        onClick={() => setModalOpen(true)}
+        onClick={() => {
+          const form = isTransportPage ? document.getElementById('reservar') : null;
+          if (form) form.scrollIntoView({ behavior: 'smooth' });
+          else setModalOpen(true);
+        }}
         aria-label="Reservar vehículo"
         className={`fixed bottom-6 right-6 z-40 flex items-center justify-center w-14 h-14 rounded-full shadow-lg transition-all duration-300 hover:scale-110 active:scale-95 ${
           visible ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 translate-y-4 pointer-events-none'

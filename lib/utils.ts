@@ -1,5 +1,16 @@
+/* ── Configuración del sitio (se cambia aquí, sin variables de entorno) ── */
+
+/** Número de WhatsApp de Sloth (código de país + número, sin "+") */
+export const WHATSAPP_NUMBER = '50671896080';
+
+/** Tipo de cambio ₡/USD de respaldo — solo se usa si la API de Hacienda no responde */
+export const USD_CRC_FALLBACK_RATE = 500;
+
+/** Cambiar a false cuando el Santa Fe se venda: muestra "Consultar disponibilidad" */
+export const SANTAFE_AVAILABLE = true;
+
 export function getExchangeRate(): number {
-  return Number(process.env.NEXT_PUBLIC_USD_CRC_RATE) || 530;
+  return USD_CRC_FALLBACK_RATE;
 }
 
 export function crcToUsd(crc: number, rate?: number): number {
@@ -27,11 +38,11 @@ export function formatPricePerDay(pricePerDayCRC: number): string {
 }
 
 export function isSantaFeAvailable(): boolean {
-  return process.env.NEXT_PUBLIC_SANTAFE_AVAILABLE !== 'false';
+  return SANTAFE_AVAILABLE;
 }
 
 export function getWhatsAppNumber(): string {
-  return process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? '50671896080';
+  return WHATSAPP_NUMBER;
 }
 
 export function buildWhatsAppUrl(message: string): string {
@@ -41,4 +52,11 @@ export function buildWhatsAppUrl(message: string): string {
 
 export function cn(...classes: (string | undefined | null | false)[]): string {
   return classes.filter(Boolean).join(' ');
+}
+
+/** Copia del objeto sin las claves indicadas (útil para limpiar errores de formulario) */
+export function omitKeys<T extends Record<string, unknown>>(obj: T, ...keys: string[]): T {
+  const copy: Record<string, unknown> = { ...obj };
+  for (const k of keys) delete copy[k];
+  return copy as T;
 }

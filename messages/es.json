@@ -5,7 +5,8 @@
     "destinations": "Destinos",
     "faq": "FAQ",
     "book": "Reservar",
-    "langSwitch": "EN"
+    "langSwitch": "EN",
+    "transport": "Transporte"
   },
   "hero": {
     "tagline": "Explora Costa Rica a tu propio ritmo",
@@ -25,10 +26,22 @@
   "trust": {
     "title": "¿Por qué elegirnos?",
     "items": [
-      { "title": "Seguro incluido", "desc": "CDW, accidentes, terceros y robo en cada reserva" },
-      { "title": "Reserva en minutos", "desc": "Cotización por WhatsApp, sin formularios complicados" },
-      { "title": "Asistencia 24 horas", "desc": "Te acompañamos en toda tu aventura costarricense" },
-      { "title": "Entrega en aeropuerto", "desc": "Servicio en Juan Santamaría (SJO) y Turrialba" }
+      {
+        "title": "Seguro incluido",
+        "desc": "CDW, accidentes, terceros y robo en cada reserva"
+      },
+      {
+        "title": "Reserva en minutos",
+        "desc": "Cotización por WhatsApp, sin formularios complicados"
+      },
+      {
+        "title": "Asistencia 24 horas",
+        "desc": "Te acompañamos en toda tu aventura costarricense"
+      },
+      {
+        "title": "Entrega en aeropuerto",
+        "desc": "Servicio en Juan Santamaría (SJO) y Turrialba"
+      }
     ]
   },
   "fleet": {
@@ -54,7 +67,11 @@
     "availabilityLimited": "Consultar disponibilidad",
     "rateRef": "Precios estimados en USD. Tipo de cambio de referencia.",
     "viewCarousel": "Carrusel",
-    "viewGrid": "Cuadrícula"
+    "viewGrid": "Cuadrícula",
+    "vehiclesCount": "{n} vehículos",
+    "noResults": "No hay vehículos con este filtro.",
+    "currencyCRC": "₡ Colones",
+    "currencyUSD": "$ Dólares"
   },
   "howItWorks": {
     "title": "Cómo funciona",
@@ -187,9 +204,11 @@
       },
       {
         "q": "¿Cuál es el requisito de edad y documentación?",
-        "a": "Se requiere tener mínimo 25 años, licencia de conducir vigente válida en Costa Rica, pasaporte o cédula, y tarjeta de crédito para el depósito de garantía."
+        "a": "Para rentar necesitas:",
+        "key": "requirements"
       }
-    ]
+    ],
+    "label": "Información"
   },
   "footer": {
     "tagline": "Explora Costa Rica a tu propio ritmo",
@@ -244,7 +263,28 @@
     "disclaimer": "Precio estimado. El monto final se confirma por WhatsApp e incluye el depósito de garantía reembolsable (${deposit} USD).",
     "required": "Campo requerido",
     "minDays": "La devolución debe ser al menos 1 día después de la entrega",
-    "noHiddenFees": "Sin tarifas ocultas"
+    "noHiddenFees": "Sin tarifas ocultas",
+    "airportPickup": "Recogida en el aeropuerto: Sloth me recoge en el aeropuerto y salgo desde Turrialba (+⁠{price})",
+    "flightNumber": "Número de vuelo",
+    "flightNumberPlaceholder": "Ej. AA1234",
+    "flightArrival": "Fecha y hora de llegada del vuelo",
+    "returnTransfer": "Traslado de regreso: devuelvo el carro y Sloth me lleva al aeropuerto (+⁠{price})",
+    "returnFlightDeparture": "Fecha y hora de salida de tu vuelo",
+    "returnFlightDepartureHint": "Puede ser otro día que la devolución del carro.",
+    "returnFlightBeforeReturn": "El vuelo de salida no puede ser antes de la devolución del carro",
+    "transfers": "Transporte al aeropuerto",
+    "locationTurrialbaArea": "Alrededores de Turrialba (costo de entrega a cotizar)",
+    "deliveryPlace": "¿Dónde te entregamos el carro?",
+    "deliveryPlacePlaceholder": "Lugar, hotel o dirección",
+    "tooSoon": "Necesitamos al menos 7 horas de anticipación para tener todo listo. Si es urgente, escríbenos por WhatsApp.",
+    "tooSoonCta": "Escribir por WhatsApp",
+    "lineAirportPickup": "+ Recogida en aeropuerto",
+    "lineReturnTransfer": "+ Traslado de regreso al aeropuerto",
+    "lineDelivery": "+ Entrega en {place}",
+    "toQuote": "a cotizar",
+    "requirementsTitle": "Requisitos para rentar",
+    "requirementsConfirm": "Confirmo que cumplo los requisitos",
+    "requirementsError": "Confirma que cumples los requisitos para continuar"
   },
   "vehicle": {
     "back": "← Volver a la flota",
@@ -284,7 +324,9 @@
     "noHiddenFees": "Sin tarifas ocultas",
     "relatedTitle": "Otros vehículos que te pueden interesar",
     "checkAvailability": "Consultar disponibilidad",
-    "availabilityLimited": "Disponibilidad limitada — consulta por WhatsApp"
+    "availabilityLimited": "Disponibilidad limitada — consulta por WhatsApp",
+    "zeroDeductibleDesc": "Elimina el deducible de $800",
+    "childSeatDesc": "Silla homologada para niños"
   },
   "about": {
     "label": "Sobre nosotros",
@@ -307,5 +349,181 @@
     "title": "¡Ups! Esta página no existe",
     "subtitle": "Parece que el perezoso se perdió en la selva.",
     "cta": "Volver al inicio"
+  },
+  "infoTips": {
+    "label": "Más información",
+    "deductible": "El deducible estándar es de $800 USD en caso de incidente. Para eliminarlo, puedes agregar la cobertura 0 deducible por $15 USD al día al momento de reservar.",
+    "flightDelay": "Seguimos tu vuelo. Si el atraso hace que esperemos más, se cobran $10 USD por cada hora de espera.",
+    "notice": "Necesitamos al menos 7 horas para tener el transporte listo.",
+    "turrialbaArea": "El costo de entrega depende de la ubicación. Te lo confirmamos por WhatsApp.",
+    "otherDestination": "El precio depende de la distancia. Te lo confirmamos por WhatsApp antes del viaje."
+  },
+  "airportSection": {
+    "label": "Transporte al aeropuerto",
+    "title": "Te recogemos en el aeropuerto",
+    "text": "Aterriza tranquilo. Te esperamos en el aeropuerto y te llevamos a tu destino, a cualquier hora y con el precio claro desde el inicio.",
+    "points": [
+      "Te esperamos en el aeropuerto, las 24 horas",
+      "Precio claro antes de viajar, desde {price}",
+      "Si rentas, sales con tu carro listo desde Turrialba"
+    ],
+    "cta": "Ver servicio de transporte"
+  },
+  "transport": {
+    "meta": {
+      "title": "Transporte al aeropuerto en Costa Rica | Sloth Rent a Car",
+      "description": "Olvídate de taxis y buses al bajar del avión. Te esperamos en el aeropuerto y te llevamos a tu destino, a cualquier hora. Reserva por WhatsApp."
+    },
+    "places": {
+      "Aeropuerto": "Aeropuerto",
+      "Turrialba": "Turrialba",
+      "Puerto Viejo": "Puerto Viejo"
+    },
+    "hero": {
+      "label": "Transporte al aeropuerto",
+      "title": "Aterriza y relájate. Nosotros te llevamos.",
+      "subtitle": "Olvídate de taxis, buses y negociaciones al bajar del avión. Te esperamos en el aeropuerto y te llevamos a tu destino, a cualquier hora.",
+      "cta": "Reservar transporte",
+      "meta": "Desde {price} por viaje · Hasta {max} pasajeros · 24/7"
+    },
+    "how": {
+      "label": "Paso a paso",
+      "title": "Cómo funciona",
+      "subtitle": "Del avión a tu destino, sin complicaciones",
+      "steps": [
+        {
+          "title": "Reserva con tus datos de vuelo",
+          "desc": "Llena el formulario con tu vuelo y tu destino, mínimo 7 horas antes."
+        },
+        {
+          "title": "Confirmamos por WhatsApp",
+          "desc": "Te escribimos para confirmar el precio y los detalles de tu viaje."
+        },
+        {
+          "title": "Te esperamos en el aeropuerto",
+          "desc": "Seguimos tu vuelo y te esperamos a la salida. Sin buscar taxi ni negociar."
+        },
+        {
+          "title": "Te llevamos a tu destino",
+          "desc": "Viajas cómodo y directo hasta donde vas."
+        }
+      ]
+    },
+    "modes": {
+      "label": "Tú eliges",
+      "title": "Dos formas de usar el servicio",
+      "transportOnly": {
+        "title": "Solo transporte",
+        "desc": "Te recogemos en el aeropuerto y te llevamos a tu destino. También te llevamos al aeropuerto cuando regresas."
+      },
+      "withRental": {
+        "title": "Transporte + renta de carro",
+        "desc": "Te recogemos en el aeropuerto, te traemos a Turrialba y desde ahí sales con tu carro. Al terminar, devuelves el carro y te llevamos de vuelta al aeropuerto ({price} por traslado).",
+        "cta": "Ver flota"
+      },
+      "bookCta": "Reservar transporte"
+    },
+    "routes": {
+      "label": "Rutas y precios",
+      "title": "¿A dónde vas?",
+      "subtitle": "El precio es por viaje, no por persona.",
+      "perTrip": "por viaje",
+      "oneWay": "Solo ida",
+      "book": "Reservar esta ruta",
+      "otherTitle": "¿Vas a otro destino?",
+      "otherDesc": "Dinos a dónde vas y te cotizamos el viaje.",
+      "otherPrice": "A cotizar",
+      "otherCta": "Cotizar mi destino",
+      "otherOption": "Otro destino (a cotizar)"
+    },
+    "details": {
+      "label": "Lo que debes saber",
+      "title": "Detalles del servicio",
+      "items": {
+        "perTrip": "Precio por viaje, no por persona",
+        "maxPassengers": "Máximo {n} pasajeros",
+        "luggage": "Equipaje: hasta {large} maletas grandes y {medium} medianas",
+        "sameRate": "Mismo precio las 24 horas",
+        "delay": "Si el vuelo se atrasa: ${fee} por cada hora de espera",
+        "notice": "Reserva con mínimo {hours} horas de anticipación"
+      }
+    },
+    "faq": {
+      "label": "Información",
+      "title": "Preguntas frecuentes",
+      "subtitle": "Lo que más nos preguntan sobre el transporte",
+      "items": [
+        {
+          "q": "¿El precio es por persona?",
+          "a": "No, es por viaje, hasta 4 pasajeros."
+        },
+        {
+          "q": "¿Cobran más de noche o de madrugada?",
+          "a": "No, el precio es el mismo las 24 horas."
+        },
+        {
+          "q": "¿Qué pasa si mi vuelo se atrasa?",
+          "a": "Seguimos tus datos de vuelo. Si el atraso hace que esperemos más, se cobran $10 por cada hora de espera."
+        },
+        {
+          "q": "¿Cuánto equipaje puedo llevar?",
+          "a": "Hasta 2 maletas grandes y 2 medianas."
+        },
+        {
+          "q": "¿Con cuánta anticipación debo reservar?",
+          "a": "Mínimo 7 horas antes, para tener todo listo."
+        },
+        {
+          "q": "¿Van a otros destinos?",
+          "a": "Sí. Elige \"Otro destino\" en el formulario y te cotizamos por WhatsApp."
+        },
+        {
+          "q": "¿Puedo combinarlo con la renta de un carro?",
+          "a": "Sí. Te traemos a Turrialba y sales con tu carro. Marca la opción al reservar el vehículo."
+        }
+      ]
+    },
+    "form": {
+      "label": "Reserva",
+      "title": "Reserva tu transporte",
+      "subtitle": "Llena tus datos y te confirmamos por WhatsApp.",
+      "name": "Nombre completo",
+      "namePlaceholder": "Ej. Ana García",
+      "phone": "WhatsApp",
+      "countryCode": "Código de país",
+      "phonePlaceholder": "7189-6080",
+      "route": "Ruta",
+      "selectRoute": "Selecciona una ruta",
+      "from": "Desde dónde",
+      "fromPlaceholder": "Ej. hotel, ciudad o dirección",
+      "to": "Hacia dónde",
+      "toPlaceholder": "Ej. hotel, ciudad o dirección",
+      "dateFromAirport": "Fecha y hora de llegada del vuelo",
+      "dateToAirport": "Fecha y hora de recogida",
+      "dateOther": "Fecha y hora del viaje",
+      "flight": "Número de vuelo",
+      "flightOptional": "Número de vuelo (opcional)",
+      "flightPlaceholder": "Ej. AA1234",
+      "passengers": "Pasajeros",
+      "largeBags": "Maletas grandes",
+      "mediumBags": "Maletas medianas",
+      "max": "máx. {n}",
+      "notes": "Notas (opcional)",
+      "notesPlaceholder": "Ej. viajamos con un bebé, dirección exacta...",
+      "required": "Campo requerido",
+      "tooSoon": "Necesitamos al menos 7 horas de anticipación para tener todo listo. Si es urgente, escríbenos por WhatsApp.",
+      "tooSoonCta": "Escribir por WhatsApp",
+      "submit": "Enviar por WhatsApp",
+      "summaryTitle": "Resumen de precio",
+      "perTrip": "{route} · por viaje",
+      "total": "Total",
+      "quote": "Precio: a cotizar por WhatsApp",
+      "note": "*Si el vuelo se atrasa, se cobran $10 por cada hora de espera. El precio final se confirma por WhatsApp."
+    },
+    "closing": {
+      "title": "Tu viaje empieza tranquilo desde que aterrizas.",
+      "text": "Reserva en un par de minutos y te confirmamos por WhatsApp.",
+      "cta": "Reservar transporte"
+    }
   }
 }

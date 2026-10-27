@@ -65,3 +65,12 @@ body {
 .scroll-hide::-webkit-scrollbar {
   display: none;
 }
+
+/* InfoTip */
+@keyframes infotip-in {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  [role='tooltip'] { animation: none !important; }
+}

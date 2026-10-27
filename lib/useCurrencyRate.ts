@@ -8,6 +8,30 @@ export interface CurrencyRateState {
   loading: boolean;
 }
 
+// Una sola consulta compartida por toda la página: todos los componentes (flota, modales,
+// transporte) usan exactamente la misma tasa de Hacienda. Si falla, se reintenta en el próximo montaje.
+let ratePromise: Promise<number | null> | null = null;
+
+function fetchHaciendaRate(): Promise<number | null> {
+  ratePromise ??= (async () => {
+    try {
+      // Proxy propio (app/api/exchange-rate) — mismo origen, cacheado en el servidor
+      const res = await fetch('/api/exchange-rate', {
+        signal: AbortSignal.timeout(10000),
+      });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const data = await res.json();
+      const valor: unknown = data?.rate;
+      if (typeof valor !== 'number' || valor < 400) throw new Error('Invalid rate');
+      return valor;
+    } catch {
+      ratePromise = null;
+      return null;
+    }
+  })();
+  return ratePromise;
+}
+
 export function useCurrencyRate(): CurrencyRateState {
   const [state, setState] = useState<CurrencyRateState>({
     rate: null,
@@ -17,28 +41,9 @@ export function useCurrencyRate(): CurrencyRateState {
 
   useEffect(() => {
     let cancelled = false;
-
-    async function fetchRate() {
-      try {
-        const res = await fetch('https://api.hacienda.go.cr/indicadores/tc/dolar', {
-          signal: AbortSignal.timeout(8000),
-        });
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        const data = await res.json();
-        const valor: number = data?.compra?.valor;
-
-        if (!valor || typeof valor !== 'number' || valor <= 0 || valor < 400) {
-          if (!cancelled) setState({ rate: null, isValid: false, loading: false });
-          return;
-        }
-
-        if (!cancelled) setState({ rate: valor, isValid: true, loading: false });
-      } catch {
-        if (!cancelled) setState({ rate: null, isValid: false, loading: false });
-      }
-    }
-
-    fetchRate();
+    fetchHaciendaRate().then((rate) => {
+      if (!cancelled) setState({ rate, isValid: rate !== null, loading: false });
+    });
     return () => {
       cancelled = true;
     };

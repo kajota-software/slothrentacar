@@ -1,9 +1,9 @@
 import type { Metadata } from 'next';
-import { getTranslations } from 'next-intl/server';
 import Hero from '@/components/Hero';
 import TrustBar from '@/components/TrustBar';
 import FleetGrid from '@/components/FleetGrid';
 import HowItWorks from '@/components/HowItWorks';
+import AirportTransferSection from '@/components/AirportTransferSection';
 import Destinations from '@/components/Destinations';
 import Testimonials from '@/components/Testimonials';
 import About from '@/components/About';
@@ -36,6 +36,7 @@ export default function HomePage() {
       <TrustBar />
       <FleetGrid />
       <HowItWorks />
+      <AirportTransferSection />
       <Destinations />
       <Testimonials />
       <About />

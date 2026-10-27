@@ -14,6 +14,7 @@ interface Props {
 
 export default function VehicleBooking({ vehicle, isLimited }: Props) {
   const t = useTranslations('vehicle');
+  const tFleet = useTranslations('fleet');
   const [modalOpen, setModalOpen] = useState(false);
   const [currency, setCurrency] = useState<'CRC' | 'USD'>('CRC');
   const { rate, isValid } = useCurrencyRate();
@@ -46,7 +47,7 @@ export default function VehicleBooking({ vehicle, isLimited }: Props) {
                         : 'text-forest-muted hover:text-forest'
                     }`}
                   >
-                    ₡ Colones
+                    {tFleet('currencyCRC')}
                   </button>
                   <button
                     onClick={() => setCurrency('USD')}
@@ -56,7 +57,7 @@ export default function VehicleBooking({ vehicle, isLimited }: Props) {
                         : 'text-forest-muted hover:text-forest'
                     }`}
                   >
-                    $ Dólares
+                    {tFleet('currencyUSD')}
                   </button>
                 </div>
               </div>

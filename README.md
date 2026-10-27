@@ -17,9 +17,6 @@ Landing page bilingüe (ES/EN) para **Sloth Rent a Car**, empresa de alquiler de
 # Instalar dependencias
 npm install
 
-# Copiar variables de entorno
-cp .env.example .env.local
-
 # Iniciar servidor de desarrollo
 npm run dev
 ```
@@ -35,15 +32,19 @@ npm run start
 
 ---
 
-## Variables de entorno
+## Configuración
 
-| Variable | Descripción | Default |
+El proyecto **no usa variables de entorno**. Todo se configura en código, en `lib/utils.ts`:
+
+| Constante | Descripción | Valor |
 |---|---|---|
-| `NEXT_PUBLIC_WHATSAPP_NUMBER` | Número de WhatsApp (sin +) | `50671896080` |
-| `NEXT_PUBLIC_USD_CRC_RATE` | Tasa de cambio de referencia ₡/USD | `530` |
-| `NEXT_PUBLIC_SANTAFE_AVAILABLE` | Disponibilidad del Santa Fe | `true` |
+| `WHATSAPP_NUMBER` | Número de WhatsApp (sin +) | `50671896080` |
+| `USD_CRC_FALLBACK_RATE` | Tipo de cambio ₡/USD de respaldo (solo si la API de Hacienda no responde) | `500` |
+| `SANTAFE_AVAILABLE` | Disponibilidad del Santa Fe | `true` |
 
-> **Nota:** Cuando el Santa Fe se venda, cambiar `NEXT_PUBLIC_SANTAFE_AVAILABLE=false` en `.env.local` (o en Vercel) para mostrar "Consultar disponibilidad" sin tocar código.
+El tipo de cambio se obtiene de la API de Hacienda a través de `app/api/exchange-rate` (cacheado 1 h).
+
+> **Nota:** Cuando el Santa Fe se venda, cambiar `SANTAFE_AVAILABLE = false` en `lib/utils.ts` para mostrar "Consultar disponibilidad".
 
 ---
 
@@ -92,8 +93,7 @@ slothrentacar/
 │   └── en.json                 # Traducciones en inglés
 ├── public/
 │   └── images/                 # Imágenes por vehículo (ver README dentro)
-├── proxy.ts                    # Proxy para locale routing (reemplaza middleware)
-└── .env.example                # Plantilla de variables de entorno
+└── proxy.ts                    # Proxy para locale routing (reemplaza middleware)
 ```
 
 ---
@@ -125,8 +125,7 @@ Ver instrucciones completas en [`public/images/README.md`](public/images/README.
 ## Deploy en Vercel
 
 1. Conecta el repositorio en [vercel.com](https://vercel.com)
-2. Agrega las variables de entorno en **Settings → Environment Variables**
-3. Deploy automático en cada push a `main`
+2. Deploy automático en cada push a `main` (no requiere variables de entorno)
 
 ---
 

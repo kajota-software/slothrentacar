@@ -17,6 +17,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
     });
   }
 
+  // Airport transfer page
+  for (const locale of LOCALES) {
+    routes.push({
+      url: `${BASE_URL}/${locale}/transporte`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.9,
+    });
+  }
+
   // Vehicle pages
   for (const locale of LOCALES) {
     for (const vehicle of fleet) {

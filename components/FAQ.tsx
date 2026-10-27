@@ -1,8 +1,9 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, type ReactNode } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
+import { rentalRequirements } from '@/lib/transport';
 
 function AccordionItem({
   question,
@@ -10,12 +11,14 @@ function AccordionItem({
   isOpen,
   onToggle,
   index,
+  idPrefix,
 }: {
   question: string;
-  answer: string;
+  answer: ReactNode;
   isOpen: boolean;
   onToggle: () => void;
   index: number;
+  idPrefix: string;
 }) {
   return (
     <motion.div
@@ -26,11 +29,11 @@ function AccordionItem({
       className="border-b border-sand-dark last:border-0"
     >
       <button
-        id={`faq-trigger-${index}`}
+        id={`${idPrefix}-trigger-${index}`}
         onClick={onToggle}
         className="w-full flex items-center justify-between py-5 text-left gap-4 group"
         aria-expanded={isOpen}
-        aria-controls={`faq-panel-${index}`}
+        aria-controls={`${idPrefix}-panel-${index}`}
       >
         <span className="font-heading text-forest font-semibold text-base md:text-lg group-hover:text-forest-light transition-colors">
           {question}
@@ -56,16 +59,16 @@ function AccordionItem({
         {isOpen && (
           <motion.div
             key="content"
-            id={`faq-panel-${index}`}
+            id={`${idPrefix}-panel-${index}`}
             role="region"
-            aria-labelledby={`faq-trigger-${index}`}
+            aria-labelledby={`${idPrefix}-trigger-${index}`}
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }}
             className="overflow-hidden"
           >
-            <p className="pb-5 text-forest-muted leading-relaxed text-sm md:text-base">{answer}</p>
+            <div className="pb-5 text-forest-muted leading-relaxed text-sm md:text-base">{answer}</div>
           </motion.div>
         )}
       </AnimatePresence>
@@ -73,13 +76,34 @@ function AccordionItem({
   );
 }
 
-export default function FAQ() {
-  const t = useTranslations('faq');
-  const items = t.raw('items') as Array<{ q: string; a: string }>;
+/* Respuesta de requisitos: se arma desde rentalRequirements para no tener dos versiones */
+function RequirementsAnswer({ intro }: { intro: string }) {
+  const locale = useLocale() === 'en' ? 'en' : 'es';
+  return (
+    <>
+      <p>{intro}</p>
+      <ul className="mt-2 space-y-1 list-disc pl-5">
+        {rentalRequirements.map((r) => (
+          <li key={r.es}>{r[locale]}</li>
+        ))}
+      </ul>
+    </>
+  );
+}
+
+interface FAQProps {
+  /** Namespace de traducción con label, title, subtitle e items */
+  namespace?: 'faq' | 'transport.faq';
+  id?: string;
+}
+
+export default function FAQ({ namespace = 'faq', id = 'faq' }: FAQProps) {
+  const t = useTranslations(namespace);
+  const items = t.raw('items') as Array<{ q: string; a: string; key?: string }>;
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   return (
-    <section id="faq" className="bg-cream py-24 md:py-32">
+    <section id={id} className="bg-cream py-24 md:py-32 scroll-mt-16">
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-12">
@@ -89,7 +113,7 @@ export default function FAQ() {
             viewport={{ once: true }}
             className="text-amber text-sm font-medium uppercase tracking-widest mb-3"
           >
-            Información
+            {t('label')}
           </motion.p>
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
@@ -117,8 +141,9 @@ export default function FAQ() {
             <AccordionItem
               key={i}
               index={i}
+              idPrefix={id}
               question={item.q}
-              answer={item.a}
+              answer={item.key === 'requirements' ? <RequirementsAnswer intro={item.a} /> : <p>{item.a}</p>}
               isOpen={openIndex === i}
               onToggle={() => setOpenIndex(openIndex === i ? null : i)}
             />

@@ -2,12 +2,16 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { fleet, type Vehicle } from '@/lib/fleet';
-import { formatUSD, formatCRC, crcToUsd, usdToCrc, getExchangeRate, buildWhatsAppUrl, isSantaFeAvailable } from '@/lib/utils';
+import { formatUSD, formatCRC, crcToUsd, usdToCrc, getExchangeRate, buildWhatsAppUrl, getWhatsAppNumber, isSantaFeAvailable, omitKeys } from '@/lib/utils';
+import { transportRules, rentalRequirements } from '@/lib/transport';
+import { crLocalNowPlusHours, formatCrLocalEs, meetsMinNotice } from '@/lib/costaRicaTime';
+import { useCurrencyRate } from '@/lib/useCurrencyRate';
+import InfoTip from './InfoTip';
 
 /* ── Country codes ── */
-const COUNTRY_CODES = [
+export const COUNTRY_CODES = [
   { code: '+506', label: 'CR +506' },
   { code: '+1',   label: 'US/CA +1' },
   { code: '+52',  label: 'MX +52' },
@@ -25,6 +29,13 @@ interface BookingInfo {
   extraZeroDeductible: boolean;
   extraChildSeat: boolean;
   notes: string;
+  // Transporte aeropuerto ↔ Turrialba
+  airportPickup: boolean;
+  flightNumber: string;
+  flightArrival: string;   // datetime-local, hora de CR
+  deliveryPlace: string;   // solo si pickupLocation === 'turrialba-area'
+  returnTransfer: boolean;
+  returnFlightDeparture: string; // datetime-local, hora de CR — puede ser otro día que la devolución
 }
 
 interface ContactInfo {
@@ -32,6 +43,7 @@ interface ContactInfo {
   countryCode: string;
   phone: string;
   email: string;
+  requirementsConfirmed: boolean;
 }
 
 interface Props {
@@ -51,7 +63,7 @@ function calcDays(pickup: string, ret: string): number {
   return Math.max(0, Math.floor(diff / (1000 * 60 * 60 * 24)));
 }
 
-function usePrice(booking: BookingInfo, liveRate: number | null) {
+function calcPrice(booking: BookingInfo, liveRate: number | null) {
   const rate = liveRate ?? getExchangeRate();
   const vehicle = fleet.find((v) => v.slug === booking.vehicleSlug);
   const days = calcDays(booking.pickupDate, booking.returnDate);
@@ -60,10 +72,12 @@ function usePrice(booking: BookingInfo, liveRate: number | null) {
   // extras fijados en USD → convertir a CRC con tipo de cambio del día
   const zdCRC = booking.extraZeroDeductible ? usdToCrc(15 * days, rate) : 0;
   const csCRC = booking.extraChildSeat ? usdToCrc(10 * days, rate) : 0;
-  const totalCRC = vehicleCRC + zdCRC + csCRC;
+  const pickupTransferCRC = booking.airportPickup ? transportRules.rentalAddonPriceCRC : 0;
+  const returnTransferCRC = booking.returnTransfer ? transportRules.rentalAddonPriceCRC : 0;
+  const totalCRC = vehicleCRC + zdCRC + csCRC + pickupTransferCRC + returnTransferCRC;
   const depositCRC = totalCRC * 0.5;
 
-  return { vehicle, days, vehicleCRC, zdCRC, csCRC, totalCRC, depositCRC, rate };
+  return { vehicle, days, vehicleCRC, zdCRC, csCRC, pickupTransferCRC, returnTransferCRC, totalCRC, depositCRC, rate };
 }
 
 /* Formatea en la moneda seleccionada */
@@ -86,15 +100,9 @@ function buildMessage(
   contact: ContactInfo,
   currency: 'CRC' | 'USD',
   rate: number,
+  isEnglish: boolean,
 ): string {
-  const vehicle = fleet.find((v) => v.slug === booking.vehicleSlug);
-  const days = calcDays(booking.pickupDate, booking.returnDate);
-
-  const vehicleCRC = (vehicle?.pricePerDayCRC ?? 0) * days;
-  const zdCRC = booking.extraZeroDeductible ? usdToCrc(15 * days, rate) : 0;
-  const csCRC = booking.extraChildSeat ? usdToCrc(10 * days, rate) : 0;
-  const totalCRC = vehicleCRC + zdCRC + csCRC;
-  const depositCRC = totalCRC * 0.5;
+  const { vehicle, days, totalCRC, depositCRC } = calcPrice(booking, rate);
 
   const totalDisplay = fmt(totalCRC, currency, rate);
   const depositDisplay = fmt(depositCRC, currency, rate);
@@ -108,7 +116,31 @@ function buildMessage(
     turrialba: 'Sucursal Turrialba',
     airport: 'Aeropuerto Juan Santamaria (SJO)',
     other: booking.notes ? 'Otro (ver notas)' : 'Otro',
+    'turrialba-area': 'Alrededores de Turrialba',
   };
+
+  // Transporte al aeropuerto — cada línea solo si aplica
+  const transferPrice = formatCRC(transportRules.rentalAddonPriceCRC);
+  const transferLines: string[] = [];
+  if (booking.airportPickup) {
+    const arrival = formatCrLocalEs(booking.flightArrival);
+    transferLines.push(
+      `*Recogida en aeropuerto:* Sí — Vuelo ${booking.flightNumber.trim()}, llega ${arrival.date} ${arrival.time} (${transferPrice})`,
+    );
+  }
+  if (booking.pickupLocation === 'turrialba-area') {
+    transferLines.push(`*Entrega del carro:* ${booking.deliveryPlace.trim()} (a cotizar)`);
+  }
+  if (booking.returnTransfer) {
+    const departure = formatCrLocalEs(booking.returnFlightDeparture);
+    transferLines.push(`*Traslado de regreso:* Sí — Vuelo de salida: ${departure.date} a las ${departure.time} (${transferPrice})`);
+  }
+
+  const closingLines: string[] = [];
+  if (contact.requirementsConfirmed) {
+    closingLines.push(`*Confirma requisitos:* Sí (${rentalRequirements.map((r) => r.short).join(', ')})`);
+  }
+  if (isEnglish) closingLines.push('*Idioma del cliente:* Inglés');
 
   const sep = '━━━━━━━━━━━━━━━━━━━━';
 
@@ -121,7 +153,7 @@ ${sep}
 *Recogida:* ${fmtDate(booking.pickupDate)}
 *Devolucion:* ${fmtDate(booking.returnDate)}
 *Dias:* ${days}
-*Extras:* ${extras.length > 0 ? extras.join(' | ') : 'Ninguno'}
+*Extras:* ${extras.length > 0 ? extras.join(' | ') : 'Ninguno'}${transferLines.length > 0 ? `\n${transferLines.join('\n')}` : ''}
 
 ${sep}
 *Total estimado:* ~${totalDisplay} ${currencyLabel}
@@ -132,7 +164,7 @@ ${sep}
 *Nombre:* ${contact.name}
 *WhatsApp:* ${contact.countryCode} ${contact.phone}
 *Email:* ${contact.email || '—'}
-*Notas:* ${booking.notes || '—'}`;
+*Notas:* ${booking.notes || '—'}${closingLines.length > 0 ? `\n\n${closingLines.join('\n')}` : ''}`;
 }
 
 /* ── Component ── */
@@ -146,41 +178,65 @@ export default function ReservationModal({
   rate: rateProp = null,
 }: Props) {
   const t = useTranslations('modal');
+  const tTips = useTranslations('infoTips');
+  const locale = useLocale();
 
   const [step, setStep] = useState(1);
   const [booking, setBooking] = useState<BookingInfo>({
     vehicleSlug: preselectedVehicle?.slug ?? '',
-    pickupDate: '',
-    returnDate: '',
+    pickupDate: preselectedPickupDate ?? '',
+    returnDate: preselectedReturnDate ?? '',
     pickupLocation: 'turrialba',
     extraZeroDeductible: false,
     extraChildSeat: false,
     notes: '',
+    airportPickup: false,
+    flightNumber: '',
+    flightArrival: '',
+    deliveryPlace: '',
+    returnTransfer: false,
+    returnFlightDeparture: '',
   });
   const [contact, setContact] = useState<ContactInfo>({
     name: '',
     countryCode: '+506',
     phone: '',
     email: '',
+    requirementsConfirmed: false,
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [flightTooSoon, setFlightTooSoon] = useState(false);
+  const [minFlightArrival, setMinFlightArrival] = useState('');
   const scrollRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
+  // Sincroniza las preselecciones del padre (ajuste de estado durante el render, sin efecto)
+  const [prevPreselected, setPrevPreselected] = useState({ preselectedVehicle, preselectedPickupDate, preselectedReturnDate });
+  if (
+    prevPreselected.preselectedVehicle !== preselectedVehicle ||
+    prevPreselected.preselectedPickupDate !== preselectedPickupDate ||
+    prevPreselected.preselectedReturnDate !== preselectedReturnDate
+  ) {
+    setPrevPreselected({ preselectedVehicle, preselectedPickupDate, preselectedReturnDate });
     setBooking((s) => ({
       ...s,
       vehicleSlug: preselectedVehicle?.slug ?? s.vehicleSlug,
       pickupDate: preselectedPickupDate ?? s.pickupDate,
       returnDate: preselectedReturnDate ?? s.returnDate,
     }));
-  }, [preselectedVehicle, preselectedPickupDate, preselectedReturnDate]);
+  }
 
-  useEffect(() => {
+  // Al cerrar, vuelve al paso 1 y limpia errores
+  const [prevOpen, setPrevOpen] = useState(open);
+  if (prevOpen !== open) {
+    setPrevOpen(open);
     if (!open) {
       setStep(1);
       setErrors({});
-      return;
     }
+  }
+
+  useEffect(() => {
+    if (!open) return;
     // Lock body scroll — iOS-safe (position:fixed keeps page from scrolling under the modal)
     const y = window.scrollY;
     document.body.style.overflow = 'hidden';
@@ -196,7 +252,9 @@ export default function ReservationModal({
     };
   }, [open]);
 
-  const price = usePrice(booking, rateProp);
+  // Siempre la tasa de Hacienda (la misma en todo el sitio); 500 solo si la API no responde
+  const { rate: liveRate } = useCurrencyRate();
+  const price = calcPrice(booking, rateProp ?? liveRate);
 
   const availableVehicles = fleet.filter(
     (v) => !(v.note === 'availability-limited' && !isSantaFeAvailable())
@@ -216,14 +274,31 @@ export default function ReservationModal({
     if (booking.pickupDate && booking.returnDate && calcDays(booking.pickupDate, booking.returnDate) < 1) {
       e.returnDate = t('minDays');
     }
+    let tooSoon = false;
+    if (booking.airportPickup) {
+      if (!booking.flightNumber.trim()) e.flightNumber = t('required');
+      if (!booking.flightArrival) e.flightArrival = t('required');
+      else tooSoon = !meetsMinNotice(booking.flightArrival, transportRules.minNoticeHours);
+    }
+    if (booking.pickupLocation === 'turrialba-area' && !booking.deliveryPlace.trim()) {
+      e.deliveryPlace = t('required');
+    }
+    if (booking.returnTransfer) {
+      if (!booking.returnFlightDeparture) e.returnFlightDeparture = t('required');
+      else if (booking.returnDate && booking.returnFlightDeparture.slice(0, 10) < booking.returnDate) {
+        e.returnFlightDeparture = t('returnFlightBeforeReturn');
+      }
+    }
+    setFlightTooSoon(tooSoon);
     setErrors(e);
-    return Object.keys(e).length === 0;
+    return Object.keys(e).length === 0 && !tooSoon;
   }
 
   function validateStep2(): boolean {
     const e: Record<string, string> = {};
     if (!contact.name.trim()) e.name = t('required');
     if (!contact.phone.trim()) e.phone = t('required');
+    if (!contact.requirementsConfirmed) e.requirements = t('requirementsError');
     setErrors(e);
     return Object.keys(e).length === 0;
   }
@@ -236,7 +311,7 @@ export default function ReservationModal({
 
   function handleSend() {
     if (!validateStep2()) return;
-    const msg = buildMessage(booking, contact, currency, price.rate);
+    const msg = buildMessage(booking, contact, currency, price.rate, locale === 'en');
     window.open(buildWhatsAppUrl(msg), '_blank', 'noopener,noreferrer');
     onClose();
   }
@@ -359,20 +434,166 @@ export default function ReservationModal({
                     </div>
                   </div>
 
+                  {/* Airport transfers */}
+                  <div className="rounded-2xl border border-sand-dark p-4 space-y-3">
+                    <p className="text-sm font-medium text-forest">{t('transfers')}</p>
+                    <label htmlFor="modal-airport-pickup" className="flex items-start gap-3 cursor-pointer group">
+                      <input
+                        id="modal-airport-pickup"
+                        type="checkbox"
+                        checked={booking.airportPickup}
+                        onChange={(e) => {
+                          const checked = e.target.checked;
+                          // Con recogida en aeropuerto el carro se entrega en Turrialba o alrededores
+                          setBooking({ ...booking, airportPickup: checked, pickupLocation: 'turrialba', deliveryPlace: '' });
+                          if (!checked) {
+                            setFlightTooSoon(false);
+                            setErrors((e) => omitKeys(e, 'flightNumber', 'flightArrival', 'deliveryPlace'));
+                          }
+                        }}
+                        className="w-4 h-4 mt-0.5 flex-none accent-forest rounded"
+                      />
+                      <span className="text-sm text-forest-muted group-hover:text-forest transition-colors leading-snug">
+                        {t('airportPickup', { price: formatCRC(transportRules.rentalAddonPriceCRC) })}
+                      </span>
+                    </label>
+
+                    {booking.airportPickup && (
+                      <div className="grid grid-cols-1 min-[480px]:grid-cols-2 gap-3 pl-7">
+                        <div>
+                          <label htmlFor="modal-flight-number" className="block text-sm font-medium text-forest mb-1.5">{t('flightNumber')}</label>
+                          <input
+                            id="modal-flight-number"
+                            type="text"
+                            autoCapitalize="characters"
+                            placeholder={t('flightNumberPlaceholder')}
+                            value={booking.flightNumber}
+                            onChange={(e) => setBooking({ ...booking, flightNumber: e.target.value.toUpperCase() })}
+                            className={`w-full border rounded-xl px-3 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-forest/30 transition-colors ${
+                              errors.flightNumber ? 'border-red-400' : 'border-sand-dark'
+                            }`}
+                          />
+                          {errors.flightNumber && <p className="text-red-500 text-xs mt-1">{errors.flightNumber}</p>}
+                        </div>
+                        <div>
+                          <label htmlFor="modal-flight-arrival" className="flex items-center gap-2 text-sm font-medium text-forest mb-1.5">
+                            {t('flightArrival')}
+                            <InfoTip text={tTips('notice')} />
+                          </label>
+                          <input
+                            id="modal-flight-arrival"
+                            type="datetime-local"
+                            min={minFlightArrival || undefined}
+                            onFocus={() => setMinFlightArrival(crLocalNowPlusHours(transportRules.minNoticeHours))}
+                            value={booking.flightArrival}
+                            onChange={(e) => {
+                              const value = e.target.value;
+                              setBooking({ ...booking, flightArrival: value });
+                              setFlightTooSoon(!!value && !meetsMinNotice(value, transportRules.minNoticeHours));
+                            }}
+                            className={`w-full border rounded-xl px-3 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-forest/30 transition-colors min-h-[46px] bg-white ${
+                              errors.flightArrival || flightTooSoon ? 'border-red-400' : 'border-sand-dark'
+                            }`}
+                          />
+                          {errors.flightArrival && <p className="text-red-500 text-xs mt-1">{errors.flightArrival}</p>}
+                        </div>
+                        {flightTooSoon && (
+                          <div role="alert" className="min-[480px]:col-span-2 rounded-xl border border-amber/40 bg-amber/10 p-3">
+                            <p className="text-xs text-forest-dark leading-relaxed">{t('tooSoon')}</p>
+                            <a
+                              href={`https://wa.me/${getWhatsAppNumber()}`}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="mt-2 inline-flex items-center rounded-full bg-[#25D366] hover:brightness-95 text-white text-xs font-semibold px-3 py-1.5 transition"
+                            >
+                              {t('tooSoonCta')}
+                            </a>
+                          </div>
+                        )}
+                      </div>
+                    )}
+
+                    <label htmlFor="modal-return-transfer" className="flex items-start gap-3 cursor-pointer group">
+                      <input
+                        id="modal-return-transfer"
+                        type="checkbox"
+                        checked={booking.returnTransfer}
+                        onChange={(e) => {
+                          setBooking({ ...booking, returnTransfer: e.target.checked, returnFlightDeparture: '' });
+                          if (!e.target.checked) setErrors((err) => omitKeys(err, 'returnFlightDeparture'));
+                        }}
+                        className="w-4 h-4 mt-0.5 flex-none accent-forest rounded"
+                      />
+                      <span className="text-sm text-forest-muted group-hover:text-forest transition-colors leading-snug">
+                        {t('returnTransfer', { price: formatCRC(transportRules.rentalAddonPriceCRC) })}
+                      </span>
+                    </label>
+
+                    {booking.returnTransfer && (
+                      <div className="pl-7">
+                        <label htmlFor="modal-return-flight-departure" className="block text-sm font-medium text-forest mb-1.5">{t('returnFlightDeparture')}</label>
+                        <input
+                          id="modal-return-flight-departure"
+                          type="datetime-local"
+                          min={booking.returnDate ? `${booking.returnDate}T00:00` : undefined}
+                          value={booking.returnFlightDeparture}
+                          onChange={(e) => {
+                            setBooking({ ...booking, returnFlightDeparture: e.target.value });
+                            setErrors((err) => omitKeys(err, 'returnFlightDeparture'));
+                          }}
+                          className={`w-full min-[480px]:w-1/2 border rounded-xl px-3 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-forest/30 min-h-[46px] bg-white transition-colors ${
+                            errors.returnFlightDeparture ? 'border-red-400' : 'border-sand-dark'
+                          }`}
+                        />
+                        <p className="text-[11px] text-forest-muted mt-1">{t('returnFlightDepartureHint')}</p>
+                        {errors.returnFlightDeparture && <p className="text-red-500 text-xs mt-1">{errors.returnFlightDeparture}</p>}
+                      </div>
+                    )}
+                  </div>
+
                   {/* Location */}
                   <div>
-                    <label htmlFor="modal-location" className="block text-sm font-medium text-forest mb-1.5">{t('pickupLocation')}</label>
+                    <label htmlFor="modal-location" className="flex items-center gap-2 text-sm font-medium text-forest mb-1.5">
+                      {t('pickupLocation')}
+                      {booking.airportPickup && <InfoTip text={tTips('turrialbaArea')} />}
+                    </label>
                     <select
                       id="modal-location"
                       value={booking.pickupLocation}
-                      onChange={(e) => setBooking({ ...booking, pickupLocation: e.target.value })}
+                      onChange={(e) => setBooking({ ...booking, pickupLocation: e.target.value, deliveryPlace: '' })}
                       className="w-full border border-sand-dark rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-forest/30 bg-white"
                     >
-                      <option value="turrialba">{t('locationTurrialba')}</option>
-                      <option value="airport">{t('locationAirport')}</option>
-                      <option value="other">{t('locationOther')}</option>
+                      {booking.airportPickup ? (
+                        <>
+                          <option value="turrialba">{t('locationTurrialba')}</option>
+                          <option value="turrialba-area">{t('locationTurrialbaArea')}</option>
+                        </>
+                      ) : (
+                        <>
+                          <option value="turrialba">{t('locationTurrialba')}</option>
+                          <option value="airport">{t('locationAirport')}</option>
+                          <option value="other">{t('locationOther')}</option>
+                        </>
+                      )}
                     </select>
                   </div>
+
+                  {booking.pickupLocation === 'turrialba-area' && (
+                    <div>
+                      <label htmlFor="modal-delivery-place" className="block text-sm font-medium text-forest mb-1.5">{t('deliveryPlace')}</label>
+                      <input
+                        id="modal-delivery-place"
+                        type="text"
+                        placeholder={t('deliveryPlacePlaceholder')}
+                        value={booking.deliveryPlace}
+                        onChange={(e) => setBooking({ ...booking, deliveryPlace: e.target.value })}
+                        className={`w-full border rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-forest/30 transition-colors ${
+                          errors.deliveryPlace ? 'border-red-400' : 'border-sand-dark'
+                        }`}
+                      />
+                      {errors.deliveryPlace && <p className="text-red-500 text-xs mt-1">{errors.deliveryPlace}</p>}
+                    </div>
+                  )}
 
                   {/* Extras */}
                   <div>
@@ -389,6 +610,7 @@ export default function ReservationModal({
                         <span className="text-sm text-forest-muted group-hover:text-forest transition-colors">
                           {t('extraZeroDeductible')}
                         </span>
+                        <InfoTip text={tTips('deductible')} />
                       </label>
                       <label htmlFor="modal-extra-cs" className="flex items-center gap-3 cursor-pointer group">
                         <input
@@ -441,6 +663,26 @@ export default function ReservationModal({
                         <div className="flex justify-between text-forest-muted">
                           <span>Silla niños × {price.days}d</span>
                           <span className="font-medium text-forest">{fmt(price.csCRC, currency, price.rate)}</span>
+                        </div>
+                      )}
+                      {price.pickupTransferCRC > 0 && (
+                        <div className="flex justify-between gap-3 text-forest-muted">
+                          <span>{t('lineAirportPickup')}</span>
+                          <span className="font-medium text-forest whitespace-nowrap">{fmt(price.pickupTransferCRC, currency, price.rate)}</span>
+                        </div>
+                      )}
+                      {price.returnTransferCRC > 0 && (
+                        <div className="flex justify-between gap-3 text-forest-muted">
+                          <span>{t('lineReturnTransfer')}</span>
+                          <span className="font-medium text-forest whitespace-nowrap">{fmt(price.returnTransferCRC, currency, price.rate)}</span>
+                        </div>
+                      )}
+                      {booking.pickupLocation === 'turrialba-area' && (
+                        <div className="flex justify-between gap-3 text-forest-muted">
+                          <span className="min-w-0 break-words">
+                            {t('lineDelivery', { place: booking.deliveryPlace.trim() || t('locationTurrialbaArea').split(' (')[0] })}
+                          </span>
+                          <span className="font-medium text-forest whitespace-nowrap">{t('toQuote')}</span>
                         </div>
                       )}
 
@@ -542,6 +784,35 @@ export default function ReservationModal({
                       onChange={(e) => setContact({ ...contact, email: e.target.value })}
                       className="w-full border border-sand-dark rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-forest/30"
                     />
+                  </div>
+
+                  {/* Requisitos */}
+                  <div className={`rounded-2xl border p-4 ${errors.requirements ? 'border-red-400 bg-red-50/40' : 'border-sand-dark bg-cream'}`}>
+                    <p className="font-heading text-forest font-semibold text-sm mb-2">{t('requirementsTitle')}</p>
+                    <ul className="space-y-1.5 mb-3">
+                      {rentalRequirements.map((r) => (
+                        <li key={r.es} className="flex items-start gap-2 text-sm text-forest-muted">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4 text-forest-light flex-none mt-0.5" aria-hidden="true">
+                            <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z" clipRule="evenodd" />
+                          </svg>
+                          {locale === 'en' ? r.en : r.es}
+                        </li>
+                      ))}
+                    </ul>
+                    <label htmlFor="modal-requirements" className="flex items-center gap-3 cursor-pointer border-t border-sand-dark pt-3">
+                      <input
+                        id="modal-requirements"
+                        type="checkbox"
+                        checked={contact.requirementsConfirmed}
+                        onChange={(e) => {
+                          setContact({ ...contact, requirementsConfirmed: e.target.checked });
+                          if (e.target.checked) setErrors((e) => omitKeys(e, 'requirements'));
+                        }}
+                        className="w-4 h-4 accent-forest rounded"
+                      />
+                      <span className="text-sm font-medium text-forest">{t('requirementsConfirm')}</span>
+                    </label>
+                    {errors.requirements && <p className="text-red-500 text-xs mt-2">{errors.requirements}</p>}
                   </div>
                 </motion.div>
               )}
