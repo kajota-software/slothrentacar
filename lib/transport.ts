@@ -5,7 +5,7 @@
 export type TransportRouteId =
   | 'airport-turrialba'
   | 'turrialba-airport'
-  | 'airport-puertoviejo'
+  | 'turrialba-puertoviejo'
   | 'other';
 
 export interface TransportRoute {
@@ -21,7 +21,7 @@ export const AIRPORT = 'Aeropuerto';
 export const transportRoutes: TransportRoute[] = [
   { id: 'airport-turrialba',   from: AIRPORT,     to: 'Turrialba',    priceCRC: 60000 },
   { id: 'turrialba-airport',   from: 'Turrialba', to: AIRPORT,        priceCRC: 60000 },
-  { id: 'airport-puertoviejo', from: AIRPORT,     to: 'Puerto Viejo', priceCRC: 100000, oneWay: true }, // solo ida (ir a dejar)
+  { id: 'turrialba-puertoviejo', from: 'Turrialba', to: 'Puerto Viejo', priceCRC: 100000, oneWay: true }, // solo ida (ir a dejar)
   { id: 'other',               from: null,        to: null,           priceCRC: null },   // otro destino: a cotizar
 ];
 
